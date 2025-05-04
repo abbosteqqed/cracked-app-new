@@ -1,15 +1,20 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useTransition } from "react";
 import AuthWrapper from "./auth-wrapper";
 import { RegisterInput, registerSchema } from "../validations/register.schema";
 import InputFormField from "@/components/fields/input-form-field";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import PasswordFormField from "@/components/fields/password-form-field";
+import { signUpEmail } from "../actions/register";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+	const [isPending, startTransition] = useTransition();
+	const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -24,8 +29,28 @@ const RegisterForm = () => {
 		},
 	});
 
-	const onSubmit = (data: RegisterInput) => {
-		console.log(data);
+	const onSubmit = async (data: RegisterInput) => {
+		startTransition(() => {
+			signUpEmail({
+				email: data.email,
+				password: data.password,
+				name: data.name,
+			})
+				.then((data) => {
+					if (data.error) {
+						setErrorMessage(data.error);
+					}
+					if (data.success) {
+						reset();
+						router.replace("/");
+					}
+				})
+				.catch(() => {
+					setErrorMessage(
+						"An unexpected error occurred. Please try again later."
+					);
+				});
+		});
 	};
 	return (
 		<AuthWrapper
@@ -51,6 +76,7 @@ const RegisterForm = () => {
 					type="text"
 					placeholder="John Doe"
 					name="name"
+					disabled={isPending}
 				/>
 				<InputFormField
 					register={register}
@@ -58,7 +84,8 @@ const RegisterForm = () => {
 					error={errors.email}
 					type="email"
 					placeholder="tim@cracked.com"
-					name="name"
+					name="email"
+					disabled={isPending}
 				/>
 				<PasswordFormField
 					register={register}
@@ -66,8 +93,16 @@ const RegisterForm = () => {
 					placeholder="••••••••••••"
 					label="Password"
 					error={errors.password}
+					disabled={isPending}
 				/>
-				<Button type="submit">Create an account</Button>
+				{errorMessage && (
+					<p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+				)}
+				<Button
+					disabled={isPending}
+					type="submit">
+					Create an account
+				</Button>
 			</form>
 		</AuthWrapper>
 	);

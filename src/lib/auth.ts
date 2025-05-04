@@ -1,23 +1,53 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import db from "./db";
 import { nextCookies } from "better-auth/next-js";
+import { emailOTP, twoFactor } from "better-auth/plugins";
+import { sendOtpEmail, sendVerificationEmail } from "./services/mail.service";
+import db from "./db";
 
 export const auth = betterAuth({
+	baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),
+
 	emailAndPassword: {
 		enabled: true,
-		requireEmailVerification: true,
 		autoSignIn: false,
-		allowPasswordReset: true,
+		requireEmailVerification: true,
 	},
-	socialProviders: {
-		google: {
-			clientId: process.env.GOOGLE_CLIENT_ID || "",
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+	emailVerification: {
+		sendOnSignUp: true,
+		sendVerificationEmail: async (data, request) => {
+			const { token, url } = data;
+			await sendVerificationEmail(data.user.email, token);
 		},
 	},
-	plugins: [nextCookies()],
+
+	socialProviders: {
+		google: {
+			clientId: process.env.GOOGLE_CLIENT_ID!,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+		},
+	},
+	plugins: [
+		nextCookies(),
+		expo(),
+		twoFactor({
+			otpOptions: {
+				async sendOTP({ user, otp }, request) {
+					await sendOtpEmail(user.email, otp);
+				},
+			},
+		}),
+		emailOTP({
+			async sendVerificationOTP({ email, otp, type }) {
+				if (type === "sign-in") {
+					await sendOtpEmail(email, otp);
+				}
+			},
+		}),
+	],
 });

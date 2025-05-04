@@ -14,6 +14,7 @@ interface InputFormFieldProps {
 	error?: FieldError;
 	className?: string;
 	id?: string;
+	disabled?: boolean;
 }
 
 const InputFormField = ({
@@ -25,6 +26,7 @@ const InputFormField = ({
 	className,
 	placeholder,
 	register,
+	disabled,
 }: InputFormFieldProps) => {
 	return (
 		<div className="flex flex-col gap-1">
@@ -32,6 +34,7 @@ const InputFormField = ({
 			<Input
 				id={id}
 				type={type}
+				disabled={disabled}
 				placeholder={placeholder}
 				className={cn(
 					"w-full",
