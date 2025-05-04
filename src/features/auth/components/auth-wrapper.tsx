@@ -16,7 +16,11 @@ const AuthWrapper = ({ children, title, subtitle }: AuthWrapperProps) => {
 			<h1 className="text-xl tracking-[-0.16px] text-slate-12 font-bold mb-1.5 mt-8 text-center sm:text-left">
 				{title}
 			</h1>
-			{subtitle && subtitle}
+			{subtitle && (
+				<p className="text-base text-slate-11 font-normal mb-8 text-center sm:text-left">
+					{subtitle}
+				</p>
+			)}
 			{children}
 			<div className="flex items-center w-full gap-2 my-6">
 				<div className="flex-1 h-[1px] bg-slate-6"></div>

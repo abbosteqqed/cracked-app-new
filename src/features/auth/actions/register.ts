@@ -1,4 +1,5 @@
 "use server";
+
 import { auth } from "@/lib/auth";
 import { APIError } from "better-auth/api";
 
@@ -20,18 +21,19 @@ export const signUpEmail = async (data: {
 
 		return {
 			success: true,
-			message: "Verification email sent. Please check your inbox.",
+			message:
+				"A verification email has been sent to your inbox. Please check your email to complete your registration.",
 		};
 	} catch (error) {
 		if (error instanceof APIError) {
-			console.log(error.message);
 			return {
 				error: error.message,
 			};
 		}
 
 		return {
-			error: "An unexpected error occurred. Please try again later.",
+			error:
+				"An unexpected error occurred during sign up. Please try again later or contact support.",
 		};
 	}
 };

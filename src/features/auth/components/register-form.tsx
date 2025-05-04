@@ -56,7 +56,7 @@ const RegisterForm = () => {
 		<AuthWrapper
 			title="Create a Cracked account"
 			subtitle={
-				<p className="text-base text-slate-11 font-normal mb-8 text-center sm:text-left">
+				<>
 					Already have an account?{" "}
 					<Link
 						className="text-blue-10"
@@ -64,7 +64,7 @@ const RegisterForm = () => {
 						Log in
 					</Link>
 					.
-				</p>
+				</>
 			}>
 			<form
 				className="w-full flex flex-col gap-4"

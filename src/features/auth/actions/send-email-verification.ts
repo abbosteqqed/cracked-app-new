@@ -16,11 +16,12 @@ export const sendEmailVerification = async (email: string) => {
 		};
 	} catch (error) {
 		if (error instanceof APIError) {
-			console.log(error.message);
 			return {
 				error: error.message,
 			};
 		}
+
+		console.log(error);
 
 		return {
 			error: "An unexpected error occurred. Please try again later.",

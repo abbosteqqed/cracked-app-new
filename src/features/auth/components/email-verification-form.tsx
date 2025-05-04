@@ -49,18 +49,14 @@ const EmailVerificationForm = () => {
 	return (
 		<AuthWrapper
 			title="Email verification"
-			subtitle={
-				<p className="text-base text-slate-11 font-normal mb-8 text-center sm:text-left">
-					Send email verification by entering email
-				</p>
-			}>
+			subtitle={<>Send email verification by entering email</>}>
 			{successMessage ? (
 				<div className="flex items-center justify-between py-6 flex-col w-full gap-4">
 					<p className="text-center text-green-500">{successMessage}</p>
 					<Button
 						disabled={isPending}
 						onClick={() => router.push("/auth/signin")}
-                        className="w-full"
+						className="w-full"
 						type="button">
 						<span>Go to Login</span>
 						<ArrowRight className="size-4" />
