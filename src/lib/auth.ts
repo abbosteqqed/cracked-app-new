@@ -8,7 +8,7 @@ import { sendOtpEmail, sendVerificationEmail } from "./services/mail.service";
 import db from "./db";
 
 export const auth = betterAuth({
-	baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+	baseURL: process.env.NEXT_PUBLIC_WEBSITE_URL,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),
