@@ -1,12 +1,12 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { Suspense, useEffect, useState, useTransition } from "react";
 import AuthWrapper from "./auth-wrapper";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { emailVerification } from "../actions/email-verification";
 
-const EmailVerificationCard = () => {
+const EmailVerification = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -88,6 +88,14 @@ const EmailVerificationCard = () => {
 				)}
 			</>
 		</AuthWrapper>
+	);
+};
+
+const EmailVerificationCard = () => {
+	return (
+		<Suspense>
+			<EmailVerification />
+		</Suspense>
 	);
 };
 

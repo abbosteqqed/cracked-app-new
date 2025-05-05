@@ -1,17 +1,19 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useTransition } from "react";
 import AuthWrapper from "./auth-wrapper";
-import { RegisterInput, registerSchema } from "../validations/register.schema";
-import InputFormField from "@/components/fields/input-form-field";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import PasswordFormField from "@/components/fields/password-form-field";
-import { signUpEmail } from "../actions/register";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { LoginInput, loginSchema } from "../validations/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signinEmailPassword } from "../actions/signin-email-password";
+import InputFormField from "@/components/fields/input-form-field";
+import PasswordFormField from "@/components/fields/password-form-field";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-const RegisterForm = () => {
+const SigninEmailPasswordForm = () => {
 	const [isPending, startTransition] = useTransition();
 	const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 	const router = useRouter();
@@ -20,30 +22,23 @@ const RegisterForm = () => {
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm<RegisterInput>({
-		resolver: zodResolver(registerSchema),
+	} = useForm<LoginInput>({
+		resolver: zodResolver(loginSchema),
 		defaultValues: {
-			name: "",
 			email: "",
 			password: "",
 		},
 	});
 
-	const onSubmit = async (data: RegisterInput) => {
+	const onSubmit = async (data: LoginInput) => {
 		startTransition(() => {
-			signUpEmail({
+			signinEmailPassword({
 				email: data.email,
 				password: data.password,
-				name: data.name,
 			})
-				.then((data) => {
-					if (data.error) {
-						setErrorMessage(data.error);
-					}
-					if (data.success) {
-						reset();
-						router.replace("/");
-					}
+				.then(() => {
+					reset();
+					router.replace("/");
 				})
 				.catch(() => {
 					setErrorMessage(
@@ -54,31 +49,22 @@ const RegisterForm = () => {
 	};
 	return (
 		<AuthWrapper
-			showSocials
-			title="Create a Cracked account"
+			title="Sign in to Cracked"
 			subtitle={
 				<>
-					Already have an account?{" "}
+					Don't have an account?{" "}
 					<Link
 						className="text-blue-10"
-						href="/auth/signin">
-						Log in
+						href="/auth/signup">
+						Sign Up
 					</Link>
 					.
 				</>
-			}>
+			}
+			showSocials>
 			<form
 				className="w-full flex flex-col gap-4"
 				onSubmit={handleSubmit(onSubmit)}>
-				<InputFormField
-					register={register}
-					label="Name"
-					error={errors.name}
-					type="text"
-					placeholder="John Doe"
-					name="name"
-					disabled={isPending}
-				/>
 				<InputFormField
 					register={register}
 					label="Email"
@@ -95,6 +81,7 @@ const RegisterForm = () => {
 					label="Password"
 					error={errors.password}
 					disabled={isPending}
+					showForgotPassword
 				/>
 				{errorMessage && (
 					<p className="text-red-500 text-sm mt-1">{errorMessage}</p>
@@ -102,11 +89,12 @@ const RegisterForm = () => {
 				<Button
 					disabled={isPending}
 					type="submit">
-					Create an account
+					<span>Continue</span>
+					<ArrowRight className="size-4" />
 				</Button>
 			</form>
 		</AuthWrapper>
 	);
 };
 
-export default RegisterForm;
+export default SigninEmailPasswordForm;
