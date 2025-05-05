@@ -1,12 +1,16 @@
 import { betterFetch } from "@better-fetch/fetch";
 import type { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authApiPrefix, authRoutes } from "./lib/constants/route";
+import { authApiPrefix, authRoutes, publicRoutes } from "./lib/constants/route";
 
 type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
 	const pathname = request.nextUrl.pathname;
+
+	if (publicRoutes.includes(pathname)) {
+		return NextResponse.next();
+	}
 
 	if (pathname.startsWith(authApiPrefix)) {
 		return NextResponse.next();
@@ -23,7 +27,7 @@ export async function middleware(request: NextRequest) {
 	);
 
 	if (!session && !authRoutes.includes(pathname)) {
-		return NextResponse.redirect(new URL("/signin", request.url));
+		return NextResponse.redirect(new URL("/auth/signin", request.url));
 	}
 
 	if (session && authRoutes.includes(pathname)) {

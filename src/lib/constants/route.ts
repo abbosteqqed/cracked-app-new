@@ -8,4 +8,5 @@ export const authRoutes = [
 	"/auth/signup",
 ];
 
-export const authApiPrefix = "/api/auth"
+export const authApiPrefix = "/api/auth";
+export const publicRoutes = ["/"];
