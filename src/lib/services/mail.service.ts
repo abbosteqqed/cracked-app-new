@@ -26,7 +26,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
 	try {
-		const link = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/auth/new-password?token=${token}`;
+		const link = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/auth/reset-password?token=${token}`;
 
 		const html = await resetPasswordEmailHTML({ link });
 
