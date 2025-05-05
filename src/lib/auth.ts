@@ -4,7 +4,11 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { emailOTP, twoFactor } from "better-auth/plugins";
-import { sendOtpEmail, sendVerificationEmail } from "./services/mail.service";
+import {
+	sendOtpEmail,
+	sendPasswordResetEmail,
+	sendVerificationEmail,
+} from "./services/mail.service";
 import db from "./db";
 
 export const auth = betterAuth({
@@ -17,11 +21,15 @@ export const auth = betterAuth({
 		enabled: true,
 		autoSignIn: false,
 		requireEmailVerification: true,
+		sendResetPassword: async (data) => {
+			await sendPasswordResetEmail(data.user.email, data.token);
+		},
+		
 	},
 	emailVerification: {
 		sendOnSignUp: true,
 		sendVerificationEmail: async (data, request) => {
-			const { token, url } = data;
+			const { token } = data;
 			await sendVerificationEmail(data.user.email, token);
 		},
 	},
