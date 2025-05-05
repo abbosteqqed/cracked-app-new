@@ -8,17 +8,23 @@ datasource db {
 }
 
 model User {
-  id            String       @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  onboarding    Boolean      @default(true)
-  profile       UserProfile?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+  id                  String                @id
+  name                String
+  email               String
+  emailVerified       Boolean
+  image               String?
+  onboarding          Boolean               @default(true)
+  profile             UserProfile?
+  subscription        Subscription?
+  credits             Credits?
+  chat                Chat[]
+  checkouts           Checkout[]
+  customerId          String?
+  purchaseCoinHistory PurchaseCoinHistory[]
+  createdAt           DateTime
+  updatedAt           DateTime
+  sessions            Session[]
+  accounts            Account[]
 
   @@unique([email])
   @@map("user")
@@ -77,4 +83,134 @@ model UserProfile {
   gender   String?
   language String
   usedFor  String
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PENDING
+  PAUSED
+  TRIAL
+  EXPIRED
+}
+
+model Subscription {
+  id                  String             @id @default(cuid())
+  name                String // e.g., "Free", "Base", "Insanity", "Founding Member"
+  user                User               @relation(fields: [userId], references: [id])
+  userId              String             @unique
+  polarSubscriptionId String? // Polar subscription ID (for recurring subscriptions)
+  polarCheckoutId     String? // Polar checkout ID (for tracking one-time purchases)
+  status              SubscriptionStatus
+  startDate           DateTime?
+  endDate             DateTime?
+  credits             Credits? // Link to credits
+}
+
+model Credits {
+  id             String        @id @default(cuid())
+  userId         String        @unique
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId String?       @unique
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  totalCredits   Int // Total credits available per month (e.g., 200, 2000000, 75000000)
+  usedCredits    Int           @default(0) // Credits consumed this month
+  resetDate      DateTime? // Date for monthly credit reset
+}
+
+model Checkout {
+  id         String   @id @default(cuid())
+  status     String
+  customerId String?
+  userId     String?
+  productId  String
+  user       User?    @relation(fields: [userId], references: [id])
+  amount     Int?
+  currency   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  purchaseCoinHistory PurchaseCoinHistory?
+}
+
+model PurchaseCoinHistory {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  amount     Int?
+  productId  String?
+  pricedId   String?
+  checkoutId String   @unique()
+  checkout   Checkout @relation(fields: [checkoutId], references: [id])
+}
+
+model Chat {
+  id        String    @id @default(cuid())
+  name      String
+  agentId   String    @unique
+  agentType String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum MessageRole {
+  user
+  system
+  assistant
+  data
+  tool
+}
+
+model Message {
+  id                       String       @id @default(cuid())
+  createdAt                DateTime     @default(now())
+  updatedAt                DateTime     @updatedAt
+  content                  Json
+  chatId                   String
+  chat                     Chat         @relation(fields: [chatId], references: [id])
+  role                     MessageRole
+  experimental_attachments Attachment[]
+}
+
+model Attachment {
+  id          String  @id @default(cuid())
+  message     Message @relation(fields: [messageId], references: [id])
+  messageId   String
+  name        String?
+  contentType String?
+  pathName    String?
+  url         String
+}
+
+model WriterAgent {
+  id                  String   @id @default(cuid())
+  name                String
+  description         String
+  style               String?
+  complexity          String?
+  flavour             String?
+  tone                String?
+  includeProfile      Boolean
+  questionSuggestions Json?
+  instructions        Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+enum KnowledgeType {
+  website
+  pdffile
+}
+
+model Knowledge {
+  id             String        @id @default(cuid())
+  agentId        String
+  type           KnowledgeType
+  fileUrl        String
+  name           String
+  websiteContent String?
+  tokens         Int           @default(0)
 }
