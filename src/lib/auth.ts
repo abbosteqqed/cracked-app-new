@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { emailOTP, twoFactor } from "better-auth/plugins";
+import { emailOTP } from "better-auth/plugins";
 import {
 	sendOtpEmail,
 	sendPasswordResetEmail,
@@ -12,6 +11,7 @@ import {
 import db from "./db";
 
 export const auth = betterAuth({
+	appName: "cracked",
 	baseURL: process.env.NEXT_PUBLIC_WEBSITE_URL,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
@@ -24,11 +24,11 @@ export const auth = betterAuth({
 		sendResetPassword: async (data) => {
 			await sendPasswordResetEmail(data.user.email, data.token);
 		},
-		
 	},
+
 	emailVerification: {
 		sendOnSignUp: true,
-		sendVerificationEmail: async (data, request) => {
+		sendVerificationEmail: async (data) => {
 			const { token } = data;
 			await sendVerificationEmail(data.user.email, token);
 		},
@@ -43,13 +43,6 @@ export const auth = betterAuth({
 	plugins: [
 		nextCookies(),
 		expo(),
-		twoFactor({
-			otpOptions: {
-				async sendOTP({ user, otp }, request) {
-					await sendOtpEmail(user.email, otp);
-				},
-			},
-		}),
 		emailOTP({
 			async sendVerificationOTP({ email, otp, type }) {
 				if (type === "sign-in") {

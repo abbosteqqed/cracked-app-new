@@ -1,23 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 
-interface InputFormFieldProps {
+interface InputFormFieldProps<TFormValues extends FieldValues> {
 	label?: string;
 	type: React.HTMLInputTypeAttribute;
 	placeholder?: string;
-	name: string;
-	register: UseFormRegister<any>;
+	name: Path<TFormValues>;
+	register: UseFormRegister<TFormValues>;
 	error?: FieldError;
 	className?: string;
 	id?: string;
 	disabled?: boolean;
 }
 
-const InputFormField = ({
+const InputFormField = <TFormValues extends FieldValues>({
 	id,
 	label,
 	name,
@@ -27,7 +26,7 @@ const InputFormField = ({
 	placeholder,
 	register,
 	disabled,
-}: InputFormFieldProps) => {
+}: InputFormFieldProps<TFormValues>) => {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && <Label htmlFor={id}>{label}</Label>}

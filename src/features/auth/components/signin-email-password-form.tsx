@@ -12,6 +12,7 @@ import PasswordFormField from "@/components/fields/password-form-field";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { SUCCESS_LOGIN_REDIRECT } from "@/lib/constants/links";
 
 const SigninEmailPasswordForm = () => {
 	const [isPending, startTransition] = useTransition();
@@ -38,7 +39,7 @@ const SigninEmailPasswordForm = () => {
 			})
 				.then(() => {
 					reset();
-					router.replace("/");
+					router.replace(SUCCESS_LOGIN_REDIRECT);
 				})
 				.catch(() => {
 					setErrorMessage(

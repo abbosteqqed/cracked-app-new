@@ -1,5 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
+"use client";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
+import { SIGN_IN_WITH_OTP_LINK } from "@/lib/constants/links";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlinePassword } from "react-icons/md";
@@ -17,6 +20,10 @@ const AuthWrapper = ({
 	subtitle,
 	showSocials = false,
 }: AuthWrapperProps) => {
+	const router = useRouter();
+	const handleGoogleSignin = async () => {
+		await authClient.signIn.social({ provider: "google" });
+	};
 	return (
 		<div className="flex flex-col w-full max-w-[448px]">
 			<h1 className="text-xl tracking-[-0.16px] text-slate-12 font-bold mb-1.5 mt-8 text-center sm:text-left">
@@ -36,10 +43,15 @@ const AuthWrapper = ({
 						<div className="flex-1 h-[1px] bg-slate-6"></div>
 					</div>
 					<div className="flex flex-col gap-4">
-						<Button variant="outline">
+						<Button
+							onClick={handleGoogleSignin}
+							variant="outline">
 							<FcGoogle /> Login With Google
 						</Button>
-						<Button variant="outline">
+						<Button
+							type="button"
+							onClick={() => router.push(SIGN_IN_WITH_OTP_LINK)}
+							variant="outline">
 							<MdOutlinePassword /> Login With OTP
 						</Button>
 					</div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
 	return (
 		<main className="flex justify-center items-center min-h-screen w-full">
 			{children}
