@@ -45,8 +45,10 @@
 
 body {
 	font-family: Inter, sans-serif;
-	background: #05050A;
-	font-family: var(--font-inter), Arial, "Helvetica Neue", Helvetica, sans-serif;
+	background: #05050a;
+	font-family:
+		var(--font-inter), Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color: #fff;
 }
 
 @theme {

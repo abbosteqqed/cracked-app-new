@@ -1,9 +1,22 @@
-import React from 'react'
+import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { redirect } from "next/navigation";
+import React from "react";
 
-const AppLayout = () => {
-  return (
-    <div>AppLayout</div>
-  )
+interface AppLayoutProps {
+	children?: React.ReactNode;
 }
 
-export default AppLayout
+const AppLayout = async ({ children }: AppLayoutProps) => {
+	const res = await getCurrentUser();
+
+	if (!res) {
+		return redirect("/auth/sigin");
+	}
+
+	if (res && res.user.onboarding) {
+		return redirect("/onboarding");
+	}
+	return <>{children}</>;
+};
+
+export default AppLayout;
