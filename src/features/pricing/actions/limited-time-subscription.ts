@@ -69,6 +69,7 @@ const freePlanSubscription = async () => {
 			customerEmail: user.email,
 			products: ["07acff71-dc51-4bee-9340-6e7bf0186484"],
 			successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+			
 			allowDiscountCodes: false,
 			metadata: {
 				userId: user.id,

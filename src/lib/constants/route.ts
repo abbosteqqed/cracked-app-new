@@ -9,5 +9,5 @@ export const authRoutes = [
 ];
 
 export const authApiPrefix = "/api/auth";
-export const webhookPrefix = "/api/webhook"
+export const webhookPrefix = "/api/webhook";
 export const publicRoutes = ["/"];

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { PolarEmbedCheckout } from "@polar-sh/checkout/embed";
 import PricingCard from "./pricing-card";
 import { toast } from "sonner";
@@ -10,8 +10,12 @@ import { limitedTimeSubscription } from "../actions/limited-time-subscription";
 const LimitedPricing = () => {
 	const [isPending, startTransition] = useTransition();
 	const [checkoutLink, setCheckoutLink] = useState<string | null>(null);
+	const buttonRef = useRef(null);
 	useEffect(() => {
-		PolarEmbedCheckout.init();
+	
+		if (checkoutLink) {
+			PolarEmbedCheckout.create(checkoutLink, "dark");
+		}
 	}, [checkoutLink]);
 	const handlePricingPlan = (plan: string) => {
 		startTransition(() => {
@@ -69,6 +73,7 @@ const LimitedPricing = () => {
 				{checkoutLink && (
 					<div>
 						<a
+							ref={buttonRef}
 							href={checkoutLink}
 							data-polar-checkout
 							data-polar-checkout-theme="dark">
