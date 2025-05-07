@@ -37,9 +37,14 @@ const SigninEmailPasswordForm = () => {
 				email: data.email,
 				password: data.password,
 			})
-				.then(() => {
-					reset();
-					router.replace(SUCCESS_LOGIN_REDIRECT);
+				.then((res) => {
+					if (res.error) {
+						setErrorMessage(res.error);
+					}
+					if (res.user) {
+						reset();
+						router.replace(SUCCESS_LOGIN_REDIRECT);
+					}
 				})
 				.catch(() => {
 					setErrorMessage(
