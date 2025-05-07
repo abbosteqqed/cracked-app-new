@@ -1,7 +1,12 @@
 import { betterFetch } from "@better-fetch/fetch";
 import type { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authApiPrefix, authRoutes, publicRoutes } from "./lib/constants/route";
+import {
+	authApiPrefix,
+	authRoutes,
+	publicRoutes,
+	webhookPrefix,
+} from "./lib/constants/route";
 
 type Session = typeof auth.$Infer.Session;
 
@@ -12,7 +17,10 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	if (pathname.startsWith(authApiPrefix)) {
+	if (
+		pathname.startsWith(authApiPrefix) ||
+		pathname.startsWith(webhookPrefix)
+	) {
 		return NextResponse.next();
 	}
 

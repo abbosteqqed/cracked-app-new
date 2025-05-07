@@ -12,6 +12,7 @@
 		"@better-auth/expo": "^1.2.7",
 		"@hookform/resolvers": "^5.0.1",
 		"@polar-sh/better-auth": "^0.1.1",
+		"@polar-sh/checkout": "^0.1.10",
 		"@polar-sh/sdk": "^0.32.13",
 		"@prisma/extension-accelerate": "^1.3.0",
 		"@radix-ui/react-dialog": "^1.1.13",

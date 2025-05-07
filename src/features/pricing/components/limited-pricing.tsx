@@ -1,8 +1,7 @@
 "use client";
-import React, { useTransition } from "react";
-
+import React, { useEffect, useState, useTransition } from "react";
+import { PolarEmbedCheckout } from "@polar-sh/checkout/embed";
 import PricingCard from "./pricing-card";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { LIMITED_PRICING } from "@/lib/constants/limited-pricing";
 import { SparklesCore } from "@/components/ui/sparkless";
@@ -10,13 +9,16 @@ import { limitedTimeSubscription } from "../actions/limited-time-subscription";
 
 const LimitedPricing = () => {
 	const [isPending, startTransition] = useTransition();
-	const router = useRouter();
+	const [checkoutLink, setCheckoutLink] = useState<string | null>(null);
+	useEffect(() => {
+		PolarEmbedCheckout.init();
+	}, [checkoutLink]);
 	const handlePricingPlan = (plan: string) => {
 		startTransition(() => {
 			limitedTimeSubscription({ plan })
 				.then((data) => {
 					if (data.url) {
-						router.push(data.url);
+						setCheckoutLink(data.url);
 					}
 					if (data.error) {
 						toast.error(data.error);
@@ -64,6 +66,16 @@ const LimitedPricing = () => {
 						/>
 					))}
 				</div>
+				{checkoutLink && (
+					<div>
+						<a
+							href={checkoutLink}
+							data-polar-checkout
+							data-polar-checkout-theme="dark">
+							Purchase
+						</a>
+					</div>
+				)}
 			</div>
 		</div>
 	);
