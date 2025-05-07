@@ -77,6 +77,27 @@ body {
 	--color-blue-10: #3b9eff;
 	--color-blue-11: #70b8ff;
 	--color-blue-12: #c2e6ff;
+
+	--color-chart-1: hsl(var(--chart-1));
+	--color-chart-2: hsl(var(--chart-2));
+	--color-chart-3: hsl(var(--chart-3));
+	--color-chart-4: hsl(var(--chart-4));
+	--color-chart-5: hsl(var(--chart-5));
+
+	--radius-lg: var(--radius);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-sm: calc(var(--radius) - 4px);
+
+	--animate-rainbow: rainbow var(--speed, 2s) infinite linear;
+}
+
+@keyframes rainbow {
+	0% {
+		background-position: 0%;
+	}
+	100% {
+		background-position: 200%;
+	}
 }
 
 :root {
@@ -113,6 +134,12 @@ body {
 	--sidebar-accent-foreground: oklch(0.205 0 0);
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
+
+	--color-1: 0 100% 63%;
+	--color-2: 270 100% 63%;
+	--color-3: 210 100% 63%;
+	--color-4: 195 100% 63%;
+	--color-5: 90 100% 63%;
 }
 
 .dark {

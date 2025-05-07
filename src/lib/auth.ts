@@ -3,12 +3,14 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { emailOTP } from "better-auth/plugins";
+import { polar as betterPolar} from "@polar-sh/better-auth";
 import {
 	sendOtpEmail,
 	sendPasswordResetEmail,
 	sendVerificationEmail,
 } from "./services/mail.service";
 import db from "./db";
+import { polar } from "./polar";
 
 export const auth = betterAuth({
 	appName: "cracked",
@@ -49,6 +51,11 @@ export const auth = betterAuth({
 					await sendOtpEmail(email, otp);
 				}
 			},
+		}),
+		betterPolar({
+			client: polar,
+			createCustomerOnSignUp: true,
+			enableCustomerPortal: true,
 		}),
 	],
 });

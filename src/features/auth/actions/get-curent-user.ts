@@ -1,5 +1,4 @@
 "use server";
-
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import { headers as NextHeaders } from "next/headers";
@@ -19,6 +18,17 @@ export const getCurrentUser = async () => {
 		where: {
 			id: session.user.id,
 		},
+		select: {
+			id: true,
+			email: true,
+			onboarding: true,
+			customerId: true,
+			subscription: {
+				select: {
+					name: true,
+				},
+			},
+		},
 	});
 
 	if (!user) {
@@ -28,9 +38,6 @@ export const getCurrentUser = async () => {
 		return null;
 	}
 	return {
-		user: {
-			email: user.email,
-			onboarding: user.onboarding,
-		},
+		user: user,
 	};
 };

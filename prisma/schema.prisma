@@ -104,18 +104,15 @@ model Subscription {
   status              SubscriptionStatus
   startDate           DateTime?
   endDate             DateTime?
-  credits             Credits? // Link to credits
 }
 
 model Credits {
-  id             String        @id @default(cuid())
-  userId         String        @unique
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  subscriptionId String?       @unique
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-  totalCredits   Int // Total credits available per month (e.g., 200, 2000000, 75000000)
-  usedCredits    Int           @default(0) // Credits consumed this month
-  resetDate      DateTime? // Date for monthly credit reset
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalCredits Int
+  usedCredits  Int       @default(0)
+  resetDate    DateTime?
 }
 
 model Checkout {

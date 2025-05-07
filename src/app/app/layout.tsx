@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import LimitedPricing from "@/features/pricing/components/limited-pricing";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -16,7 +17,7 @@ const AppLayout = async ({ children }: AppLayoutProps) => {
 	if (res && res.user.onboarding) {
 		return redirect("/onboarding");
 	}
-	return <>{children}</>;
+	return <>{!res.user.subscription ? <LimitedPricing /> : children}</>;
 };
 
 export default AppLayout;
