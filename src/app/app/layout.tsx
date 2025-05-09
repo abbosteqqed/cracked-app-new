@@ -1,3 +1,4 @@
+import AppNavbar from "@/components/layout/app-navbar";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 import LimitedPricing from "@/features/pricing/components/limited-pricing";
 import { redirect } from "next/navigation";
@@ -17,7 +18,21 @@ const AppLayout = async ({ children }: AppLayoutProps) => {
 	if (res && res.user.onboarding) {
 		return redirect("/onboarding");
 	}
-	return <>{!res.user.subscription ? <LimitedPricing /> : children}</>;
+	return (
+		<>
+			{!res.user.subscription ? (
+				<LimitedPricing />
+			) : (
+				<>
+					<AppNavbar
+						subscription={res.user.subscription}
+						credits={res.user.credits}
+					/>
+					{children}
+				</>
+			)}
+		</>
+	);
 };
 
 export default AppLayout;

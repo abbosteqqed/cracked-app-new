@@ -28,6 +28,11 @@ export const getCurrentUser = async () => {
 					name: true,
 				},
 			},
+			credits: {
+				select: {
+					totalCredits: true,
+				},
+			},
 		},
 	});
 
