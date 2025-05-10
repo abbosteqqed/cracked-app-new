@@ -32,12 +32,12 @@ const PricingCardGradient = ({
 			/>
 			<span className="text-xl font-semibold block mt-6">{item.title}</span>
 			<p className="text-sm text-neutral-400">{item.description}</p>
-			<h3 className="text-4xl mt-4 font-bold">
+			<div className="text-4xl mt-4 font-bold">
 				${item.price}{" "}
 				{item.priceText && (
 					<span className="text-base font-thin">/{item.priceText}</span>
 				)}
-			</h3>
+			</div>
 			{item.title.toLowerCase() === "free" && (
 				<Button
 					disabled

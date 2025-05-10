@@ -41,7 +41,7 @@ const UserDropdownMenu = () => {
 				</div>
 			)}
 			<DropdownMenu>
-				<DropdownMenuTrigger>
+				<DropdownMenuTrigger aria-label="User Dropdown">
 					<div className="flex gap-3 items-center">
 						<GradientCircle />
 						<ChevronDown className="size-4 text-white" />
