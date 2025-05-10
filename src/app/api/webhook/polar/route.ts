@@ -12,7 +12,7 @@ export const POST = Webhooks({
 				return 2000000;
 			}
 			if (productId === "1fc7a0ab-7b4f-401f-baca-6a09f7d4231e") {
-				return 75000000;
+				return 47500000;
 			}
 			if (productId === "07acff71-dc51-4bee-9340-6e7bf0186484") {
 				return 200;
