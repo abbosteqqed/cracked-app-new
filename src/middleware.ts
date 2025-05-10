@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 import {
 	authApiPrefix,
 	authRoutes,
-	publicRoutes,
 	webhookPrefix,
 } from "./lib/constants/route";
 
@@ -12,10 +11,6 @@ type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
 	const pathname = request.nextUrl.pathname;
-
-	if (publicRoutes.includes(pathname)) {
-		return NextResponse.next();
-	}
 
 	if (
 		pathname.startsWith(authApiPrefix) ||
@@ -39,7 +34,10 @@ export async function middleware(request: NextRequest) {
 	}
 
 	if (session && authRoutes.includes(pathname)) {
-		console.log("Authenticated user accessing auth route, redirecting to /app");
+		return NextResponse.redirect(new URL("/app", request.url));
+	}
+
+	if (session && pathname === "/") {
 		return NextResponse.redirect(new URL("/app", request.url));
 	}
 

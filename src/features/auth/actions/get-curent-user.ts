@@ -26,6 +26,8 @@ export const getCurrentUser = async () => {
 			subscription: {
 				select: {
 					name: true,
+					status: true,
+					endDate: true,
 				},
 			},
 			credits: {

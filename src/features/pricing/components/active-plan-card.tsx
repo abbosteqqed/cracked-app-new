@@ -1,0 +1,75 @@
+"use client";
+import React from "react";
+import { SubscriptionStatus } from "@prisma/client";
+import SUBSCRIPTION_PLANS from "@/lib/constants/subscription-plans";
+import { CheckIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useActivePricing } from "../hooks/use-active-pricing";
+interface ActivatePlanCardProps {
+	subsription: {
+		name: string;
+		status: SubscriptionStatus;
+		endDate: Date | null;
+	};
+}
+
+const ActivePlanCard = ({ subsription }: ActivatePlanCardProps) => {
+	const { isPending, handelUnCancel, handleCancel } = useActivePricing();
+	return (
+		<div className="max-w-5xl mx-auto px-6 pt-20">
+			<h1 className="text-4xl text-white font-semibold mb-10">Your Plan</h1>
+            <span></span>
+			<div className="bg-slate-2 border border-slate-3 p-6 rounded-xl flex justify-between max-w-2xl">
+				<div className="flex flex-col gap-6">
+					<div className="flex gap-2 items-center">
+						<h2 className="text-2xl font-semibold">{subsription.name} Plan</h2>{" "}
+						-
+						{subsription.status === "ACTIVE" ? (
+							<div className="px-2 py-1 border border-green-700 bg-green-500/10 rounded-4xl w-max text-xs h-max">
+								{subsription.status}
+							</div>
+						) : (
+							<div className="px-2 py-1 border border-slate-6 bg-slate-4 rounded-4xl w-max text-xs h-max">
+								{subsription.status}
+							</div>
+						)}
+					</div>
+					{SUBSCRIPTION_PLANS.find(
+						(item) => item.title === subsription?.name
+					) && (
+						<div className="flex flex-col">
+							{SUBSCRIPTION_PLANS.find(
+								(item) => item.title === subsription?.name
+							)?.benefits.map((benifit) => (
+								<div
+									key={benifit}
+									className="flex items-center gap-3">
+									<CheckIcon className="text-green-500 size-4" />
+									<span>{benifit}</span>
+								</div>
+							))}
+						</div>
+					)}
+				</div>
+				{subsription.status === "ACTIVE" ? (
+					<Button
+						type="button"
+						onClick={handleCancel}
+						disabled={isPending}
+						variant="outline">
+						Cancel
+					</Button>
+				) : (
+					<Button
+						onClick={handelUnCancel}
+						disabled={isPending}
+						type="button">
+						Activate
+					</Button>
+				)}
+			</div>
+		</div>
+	);
+};
+
+export default ActivePlanCard;

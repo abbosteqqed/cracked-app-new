@@ -15,10 +15,16 @@ import { authClient } from "@/lib/auth-client";
 
 const UserDropdownMenu = () => {
 	const [isSignOut, setIsSignOut] = useState(false);
-	const route = useRouter();
+	const router = useRouter();
 	const handleSignOut = async () => {
 		setIsSignOut(() => true);
-		await authClient.signOut();
+		await authClient.signOut({
+			fetchOptions: {
+				onSuccess: () => {
+					router.push("/auth/signin");
+				},
+			},
+		});
 	};
 	return (
 		<>
@@ -44,11 +50,11 @@ const UserDropdownMenu = () => {
 				<DropdownMenuContent
 					align="end"
 					className="w-48 gap- border-slate-6 bg-slate-3">
-					<DropdownMenuItem onClick={() => route.push("/app/profile")}>
+					<DropdownMenuItem onClick={() => router.push("/app/profile")}>
 						<User className="size-4" />
 						<span>Profile</span>
 					</DropdownMenuItem>
-					<DropdownMenuItem onClick={() => route.push("/app/pricing")}>
+					<DropdownMenuItem onClick={() => router.push("/app/pricing")}>
 						<Gem className="size-4" />
 						<span>Pricing</span>
 					</DropdownMenuItem>
