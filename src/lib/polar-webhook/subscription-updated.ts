@@ -16,4 +16,22 @@ export const subscriptionUpdated = async (data: Subscription) => {
 			await subscriptionActive(data);
 		}
 	}
+	if (data.status === "canceled") {
+		const subscription = await db.subscription.findFirst({
+			where: {
+				polarSubscriptionId: data.id,
+			},
+		});
+		if (subscription) {
+			await db.subscription.update({
+				where: {
+					id: data.id,
+				},
+				data: {
+					status: "CANCELED",
+                    
+				},
+			});
+		}
+	}
 };

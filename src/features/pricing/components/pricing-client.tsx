@@ -1,6 +1,6 @@
 "use client";
-import { useMutation, useQuery} from "@tanstack/react-query";
-import React, { lazy } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import React from "react";
 import { getSubscriptions } from "../actions/get-subscriptions";
 import LoadingPage from "@/components/layout/loading-page";
 import FormError from "@/components/fields/form-error";
@@ -8,9 +8,14 @@ import SUBSCRIPTION_PLANS from "@/lib/constants/subscription-plans";
 import { toast } from "sonner";
 import { upgradeSubscription } from "../actions/upgrade-subscription";
 import { PolarEmbedCheckout } from "@polar-sh/checkout/embed";
+import dynamic from "next/dynamic";
 
-const ActivePlanCard = lazy(() => import("./active-plan-card"));
-const PricingCard = lazy(() => import("./priciing-card-gradient"));
+const ActivePlanCard = dynamic(() => import("./active-plan-card"), {
+	ssr: false,
+});
+const PricingCard = dynamic(() => import("./priciing-card-gradient"), {
+	ssr: false,
+});
 
 const PricingClient = () => {
 	const { data, isPending, error } = useQuery({
