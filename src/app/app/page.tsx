@@ -1,9 +1,12 @@
-import React from 'react'
+import RecommendedAgents from "@/features/app/components/recomended-agents";
+import React from "react";
 
 const AppPage = () => {
-  return (
-    <div>AppPage</div>
-  )
-}
+	return (
+		<>
+			<RecommendedAgents />
+		</>
+	);
+};
 
-export default AppPage
+export default AppPage;
