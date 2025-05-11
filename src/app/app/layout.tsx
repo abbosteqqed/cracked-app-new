@@ -1,7 +1,4 @@
 import AppNavbar from "@/components/layout/app-navbar";
-import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
-import LimitedPricing from "@/features/pricing/components/limited-pricing";
-import { redirect } from "next/navigation";
 import React from "react";
 
 interface AppLayoutProps {
@@ -9,28 +6,12 @@ interface AppLayoutProps {
 }
 
 const AppLayout = async ({ children }: AppLayoutProps) => {
-	const res = await getCurrentUser();
-
-	if (!res) {
-		return redirect("/auth/sigin");
-	}
-
-	if (res && res.user.onboarding) {
-		return redirect("/onboarding");
-	}
 	return (
 		<>
-			{!res.user.subscription ? (
-				<LimitedPricing />
-			) : (
-				<>
-					<AppNavbar
-						subscription={res.user.subscription}
-						credits={res.user.credits}
-					/>
-					{children}
-				</>
-			)}
+			<>
+				<AppNavbar />
+				{children}
+			</>
 		</>
 	);
 };
