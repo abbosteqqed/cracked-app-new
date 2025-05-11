@@ -36,6 +36,7 @@ export const cancelPricing = async () => {
 			id: subscription.polarSubscriptionId,
 			subscriptionUpdate: {
 				cancelAtPeriodEnd: true,
+				revoke: undefined,
 			},
 		});
 

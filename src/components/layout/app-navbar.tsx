@@ -6,10 +6,11 @@ import NavbarRight from "./navbar-right";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "../ui/skleton";
 
 const AppNavbar = () => {
 	const router = useRouter();
-	const { data } = useQuery({
+	const { data, isPending } = useQuery({
 		queryKey: ["user"],
 		queryFn: getCurrentUser,
 	});
@@ -32,6 +33,13 @@ const AppNavbar = () => {
 					aria-label="App Home">
 					<Logo />
 				</Link>
+				{isPending && (
+					<div className="flex items-center gap-4">
+						<Skeleton className="w-[60px] h-8 rounded-full" />
+						<Skeleton className="w-[120px] h-8 rounded-full" />
+						<Skeleton className="w-10 h-10 rounded-full" />
+					</div>
+				)}
 				{data && (
 					<NavbarRight
 						subscription={data.user.subscription}
