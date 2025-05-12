@@ -1,5 +1,4 @@
 "use server";
-
 import { Subscription } from "@polar-sh/sdk/models/components/subscription.js";
 import db from "../db";
 import { subscriptionActive } from "./subscription-active";
@@ -25,11 +24,10 @@ export const subscriptionUpdated = async (data: Subscription) => {
 		if (subscription) {
 			await db.subscription.update({
 				where: {
-					id: data.id,
+					id: subscription.id,
 				},
 				data: {
 					status: "CANCELED",
-                    
 				},
 			});
 		}
