@@ -2,28 +2,20 @@
 
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import { headers as NextHeaders } from "next/headers";
+import { headers } from "next/headers";
 
-/**
- * Retrieves the current authenticated user with their subscription and credit information
- * @returns {Promise<{user: User} | null>} The user object or null if not authenticated
- */
 export const getCurrentUser = async () => {
 	try {
-		const headers = await NextHeaders();
-
 		// Get session
 		const session = await auth.api.getSession({
-			headers,
+			headers: await headers(),
 		});
 
 		// If no session, sign out and return null
 		if (!session) {
-			try {
-				await auth.api.signOut({ headers });
-			} catch (signOutError) {
-				console.error("Error signing out:", signOutError);
-			}
+			await auth.api.signOut({
+				headers: await headers(),
+			});
 			return null;
 		}
 
@@ -54,11 +46,7 @@ export const getCurrentUser = async () => {
 
 		// If user not found in DB, sign out and return null
 		if (!user) {
-			try {
-				await auth.api.signOut({ headers });
-			} catch (signOutError) {
-				console.error("Error signing out:", signOutError);
-			}
+			await auth.api.signOut({ headers: await headers() });
 			return null;
 		}
 

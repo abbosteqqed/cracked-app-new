@@ -7,7 +7,7 @@ const OnboardingPage = async () => {
 	const res = await getCurrentUser();
 
 	if (!res) {
-		return redirect("/app");
+		return redirect("/auth/signin");
 	}
 
 	if (res && !res.user.onboarding) {
