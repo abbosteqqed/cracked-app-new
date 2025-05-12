@@ -51,6 +51,25 @@ body {
 	color: #fff;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: rgba(255,255,255,0.1); 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #535353; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+  }
+
 @theme {
 	--color-slate-1: #00000000;
 	--color-slate-2: #d8f4f609;

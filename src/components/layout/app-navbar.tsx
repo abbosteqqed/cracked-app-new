@@ -1,21 +1,22 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import Logo from "./logo";
 import NavbarRight from "./navbar-right";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Skeleton } from "../ui/skleton";
 
 const AppNavbar = () => {
+	const pathname = usePathname();
 	const router = useRouter();
 	const { data, isPending } = useQuery({
 		queryKey: ["user"],
 		queryFn: getCurrentUser,
 	});
 
-	useEffect(() => {
+	useCallback(() => {
 		if (data) {
 			if (data.user.onboarding) {
 				router.replace("/onboarding");
@@ -25,6 +26,20 @@ const AppNavbar = () => {
 			}
 		}
 	}, [data]);
+
+	if (pathname.startsWith("/app/agents")) {
+		return (
+			<>
+				<div className="p-7 w-full">
+					<Link
+						href="/app"
+						className="text-white/50 text-sm hover:text-white transition-colors">
+						Cancel
+					</Link>
+				</div>
+			</>
+		);
+	}
 	return (
 		<div className="relative w-full bg-primary-bg py-4">
 			<div className="max-w-5xl flex items-center justify-between mx-auto">

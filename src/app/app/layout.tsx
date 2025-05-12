@@ -5,7 +5,7 @@ interface AppLayoutProps {
 	children?: React.ReactNode;
 }
 
-const AppLayout = async ({ children }: AppLayoutProps) => {
+const AppLayout = ({ children }: AppLayoutProps) => {
 	return (
 		<>
 			<>
