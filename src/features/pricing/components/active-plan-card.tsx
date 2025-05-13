@@ -14,7 +14,7 @@ interface ActivatePlanCardProps {
 }
 
 const ActivePlanCard = ({ subsription }: ActivatePlanCardProps) => {
-	const { isPending, handleCancel } = useActivePricing();
+	const { isPending, handleCancel, handelUnCancel } = useActivePricing();
 	return (
 		<div className="max-w-5xl mx-auto px-6 pt-10">
 			<h1 className="text-transparent mb-1 bg-clip-text bg-linear-to-br from-white to-white/70 md:text-6xl md:leading-[1.3] text-3xl font-bold text-center">
@@ -66,7 +66,12 @@ const ActivePlanCard = ({ subsription }: ActivatePlanCardProps) => {
 						Cancel
 					</Button>
 				) : (
-					<div></div>
+					<Button
+						type="button"
+						onClick={handelUnCancel}
+						disabled={isPending}>
+						Activate
+					</Button>
 				)}
 			</div>
 		</div>

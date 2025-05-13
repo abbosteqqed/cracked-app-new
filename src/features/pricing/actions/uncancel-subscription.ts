@@ -36,6 +36,7 @@ export const unCancelPricing = async () => {
 			id: subscriptionId,
 			subscriptionUpdate: {
 				cancelAtPeriodEnd: false,
+				revoke: undefined,
 			},
 		});
 
