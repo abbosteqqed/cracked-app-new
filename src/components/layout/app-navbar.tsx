@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Logo from "./logo";
 import NavbarRight from "./navbar-right";
@@ -16,7 +16,7 @@ const AppNavbar = () => {
 		queryFn: getCurrentUser,
 	});
 
-	useCallback(() => {
+	useEffect(() => {
 		if (data) {
 			if (data.user.onboarding) {
 				router.replace("/onboarding");
@@ -25,7 +25,7 @@ const AppNavbar = () => {
 				router.replace("/limited-pricing");
 			}
 		}
-	}, [data]);
+	}, [data, router]);
 
 	if (pathname.startsWith("/app/agents")) {
 		return (

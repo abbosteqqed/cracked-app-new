@@ -10,9 +10,6 @@ const nextConfig: NextConfig = {
 			{ hostname: "*r2.cloudflarestorage.com" },
 		],
 	},
-	experimental: {
-		useCache: true,
-	},
 };
 
 export default nextConfig;
