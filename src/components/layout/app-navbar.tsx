@@ -1,28 +1,31 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import Logo from "./logo";
 import NavbarRight from "./navbar-right";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { usePathname, useRouter } from "next/navigation";
+import { Skeleton } from "../ui/skleton";
 
-import { usePathname } from "next/navigation";
-
-interface AppNavbarProps {
-	user: {
-		id: string;
-		subscription: {
-			name: string;
-		} | null;
-		credits: {
-			totalCredits: number;
-		} | null;
-		email: string;
-		onboarding: boolean;
-		customerId: string | null;
-	};
-}
-
-const AppNavbar = ({ user }: AppNavbarProps) => {
+const AppNavbar = () => {
 	const pathname = usePathname();
+	const router = useRouter();
+	const { data, isPending } = useQuery({
+		queryKey: ["user"],
+		queryFn: getCurrentUser,
+	});
+
+	useCallback(() => {
+		if (data) {
+			if (data.user.onboarding) {
+				router.replace("/onboarding");
+			}
+			if (!data.user.subscription && !data.user.onboarding) {
+				router.replace("/limited-pricing");
+			}
+		}
+	}, [data]);
 
 	if (pathname.startsWith("/app/agents")) {
 		return (
@@ -45,10 +48,19 @@ const AppNavbar = ({ user }: AppNavbarProps) => {
 					aria-label="App Home">
 					<Logo />
 				</Link>
-				<NavbarRight
-					subscription={user.subscription}
-					credits={user.credits}
-				/>
+				{isPending && (
+					<div className="flex items-center gap-4">
+						<Skeleton className="w-[60px] h-8 rounded-full" />
+						<Skeleton className="w-[120px] h-8 rounded-full" />
+						<Skeleton className="w-10 h-10 rounded-full" />
+					</div>
+				)}
+				{data && (
+					<NavbarRight
+						subscription={data.user.subscription}
+						credits={data.user.credits}
+					/>
+				)}
 			</div>
 		</div>
 	);
