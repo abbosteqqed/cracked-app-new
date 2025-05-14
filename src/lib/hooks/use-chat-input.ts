@@ -59,7 +59,7 @@ const useChatInput = ({
 			setInput(finalValue);
 			adjustHeight();
 		}
-	}, []);
+	}, [localStorageInput, setInput, textareaRef]);
 
 	useEffect(() => {
 		setLocalStorageInput(input);
