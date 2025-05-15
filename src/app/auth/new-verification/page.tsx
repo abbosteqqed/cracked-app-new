@@ -1,8 +1,12 @@
 import EmailVerificationCard from "@/features/auth/components/email-verification-card";
-import React from "react";
+import React, { Suspense } from "react";
 
 const NewVerificationPage = () => {
-	return <EmailVerificationCard />;
+	return (
+		<Suspense>
+			<EmailVerificationCard />
+		</Suspense>
+	);
 };
 
 export default NewVerificationPage;

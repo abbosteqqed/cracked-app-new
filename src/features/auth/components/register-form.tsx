@@ -6,7 +6,6 @@ import AuthWrapper from "./auth-wrapper";
 import { RegisterInput, registerSchema } from "../validations/register.schema";
 import InputFormField from "@/components/fields/input-form-field";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import PasswordFormField from "@/components/fields/password-form-field";
 import { signUpEmail } from "../actions/register";
 import { useRouter } from "next/navigation";
@@ -59,11 +58,11 @@ const RegisterForm = () => {
 			subtitle={
 				<>
 					Already have an account?{" "}
-					<Link
+					<a
 						className="text-blue-10"
 						href="/auth/signin">
 						Log in
-					</Link>
+					</a>
 					.
 				</>
 			}>

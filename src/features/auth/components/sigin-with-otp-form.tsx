@@ -13,7 +13,6 @@ import InputFormField from "@/components/fields/input-form-field";
 import { useRouter } from "next/navigation";
 import { sendSigninOtp, signinWithOtp } from "../actions/signin-otp";
 import { SUCCESS_LOGIN_REDIRECT } from "@/lib/constants/links";
-import Link from "next/link";
 
 const SignInWithOtpForm = () => {
 	const router = useRouter();
@@ -84,11 +83,11 @@ const SignInWithOtpForm = () => {
 			subtitle={
 				<>
 					Don't have an account?{" "}
-					<Link
+					<a
 						className="text-blue-10"
 						href="/auth/signup">
 						Sign Up
-					</Link>
+					</a>
 					.
 				</>
 			}>

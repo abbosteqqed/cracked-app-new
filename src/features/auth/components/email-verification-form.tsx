@@ -8,10 +8,8 @@ import { Button } from "@/components/ui/button";
 import InputFormField from "@/components/fields/input-form-field";
 import { sendEmailVerification } from "../actions/send-email-verification";
 import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 const EmailVerificationForm = () => {
-	const router = useRouter();
 	const [isPending, startTransition] = useTransition();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -53,14 +51,15 @@ const EmailVerificationForm = () => {
 			{successMessage ? (
 				<div className="flex items-center justify-between py-6 flex-col w-full gap-4">
 					<p className="text-center text-green-500">{successMessage}</p>
-					<Button
-						disabled={isPending}
-						onClick={() => router.push("/auth/signin")}
-						className="w-full"
-						type="button">
-						<span>Go to Login</span>
-						<ArrowRight className="size-4" />
-					</Button>
+					<a href="/auth/signin">
+						<Button
+							disabled={isPending}
+							className="w-full"
+							type="button">
+							<span>Go to Login</span>
+							<ArrowRight className="size-4" />
+						</Button>
+					</a>
 				</div>
 			) : (
 				<form

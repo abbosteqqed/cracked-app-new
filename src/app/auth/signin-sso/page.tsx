@@ -1,8 +1,12 @@
 import SignInWithOtpForm from "@/features/auth/components/sigin-with-otp-form";
-import React from "react";
+import React, { Suspense } from "react";
 
 const SinginSSOPage = () => {
-	return <SignInWithOtpForm />;
+	return (
+		<Suspense>
+			<SignInWithOtpForm />
+		</Suspense>
+	);
 };
 
 export default SinginSSOPage;

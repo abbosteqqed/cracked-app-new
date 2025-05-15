@@ -7,12 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import InputFormField from "@/components/fields/input-form-field";
 import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { forgotPassword as sendForgotPassword } from "../actions/forgot-password";
 import Link from "next/link";
 
 const ForgotPasswordForm = () => {
-	const router = useRouter();
 	const [isPending, startTransition] = useTransition();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -56,20 +54,29 @@ const ForgotPasswordForm = () => {
 			title="Reset Your Password"
 			subtitle={
 				<>
-					Remember your password? <Link className="text-blue-10" href="/auth/signin">Sign In</Link>.
+					Remember your password?{" "}
+					<Link
+						className="text-blue-10"
+						href="/auth/signin">
+						Sign In
+					</Link>
+					.
 				</>
 			}>
 			{successMessage ? (
 				<div className="flex items-center justify-between py-6 flex-col w-full gap-4">
 					<p className="text-center text-green-500">{successMessage}</p>
-					<Button
-						disabled={isPending}
-						onClick={() => router.push("/auth/signin")}
-						className="w-full"
-						type="button">
-						<span>Return to Login</span>
-						<ArrowRight className="size-4 ml-2" />
-					</Button>
+					<a
+						href="/auth/signin"
+						className="w-full">
+						<Button
+							disabled={isPending}
+							className="w-full"
+							type="button">
+							<span>Return to Login</span>
+							<ArrowRight className="size-4 ml-2" />
+						</Button>
+					</a>
 				</div>
 			) : (
 				<form

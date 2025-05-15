@@ -11,7 +11,6 @@ import InputFormField from "@/components/fields/input-form-field";
 import PasswordFormField from "@/components/fields/password-form-field";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { SUCCESS_LOGIN_REDIRECT } from "@/lib/constants/links";
 
 const SigninEmailPasswordForm = () => {
@@ -59,11 +58,11 @@ const SigninEmailPasswordForm = () => {
 			subtitle={
 				<>
 					Don't have an account?{" "}
-					<Link
+					<a
 						className="text-blue-10"
 						href="/auth/signup">
 						Sign Up
-					</Link>
+					</a>
 					.
 				</>
 			}

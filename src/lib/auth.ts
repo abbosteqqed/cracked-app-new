@@ -42,12 +42,7 @@ export const auth = betterAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		},
 	},
-	session: {
-		cookieCache: {
-			enabled: true,
-			maxAge: 15 * 60,
-		},
-	},
+	session: {},
 	plugins: [
 		nextCookies(),
 		expo(),
