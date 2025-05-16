@@ -3,7 +3,6 @@ import { subscriptionActive } from "@/lib/polar-webhook/subscription-active";
 import { customerCreated } from "@/lib/polar-webhook/customer-created";
 import { checkoutUpdated } from "@/lib/polar-webhook/checkout-updated";
 import { checkoutCreated } from "@/lib/polar-webhook/checkout-created";
-import { subscriptionUpdated } from "@/lib/polar-webhook/subscription-updated";
 
 export const POST = Webhooks({
 	webhookSecret: process.env.POLAR_WEBHOOK_SECRET!,
@@ -19,11 +18,5 @@ export const POST = Webhooks({
 	},
 	onCheckoutCreated: async (payload) => {
 		await checkoutCreated(payload.data);
-	},
-	onSubscriptionUpdated: async (payload) => {
-		await subscriptionUpdated(payload.data);
-	},
-	onSubscriptionCanceled: async (payload) => {
-		await subscriptionUpdated(payload.data);
-	},
+	}
 });

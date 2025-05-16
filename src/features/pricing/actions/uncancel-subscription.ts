@@ -4,8 +4,9 @@ import db from "@/lib/db";
 import { polar } from "@/lib/polar";
 import { getSubscriptionById } from "./polar";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { revalidatePath } from "next/cache";
 
-export const unCancelPricing = async () => {
+export const unCancelPricing = async (pathname: string) => {
 	try {
 		const user = await getCurrentUser();
 		if (!user) {
@@ -35,19 +36,19 @@ export const unCancelPricing = async () => {
 			id: subscriptionId,
 			subscriptionUpdate: {
 				cancelAtPeriodEnd: false,
-				revoke: undefined,
 			},
 		});
 
 		await db.subscription.update({
 			where: {
-				polarSubscriptionId: subscriptionId,
-				userId: user.id,
+				id: subscription.id,
 			},
 			data: {
 				status: "ACTIVE",
 			},
 		});
+
+		revalidatePath(pathname);
 
 		return {
 			success: "Successfully subscription uncancelled",

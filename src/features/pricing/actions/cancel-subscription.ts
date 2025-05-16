@@ -4,15 +4,14 @@ import db from "@/lib/db";
 import { polar } from "@/lib/polar";
 import { getSubscriptionById } from "./polar";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { revalidatePath } from "next/cache";
 
-export const cancelPricing = async () => {
+export const cancelPricing = async (pathname: string) => {
 	try {
 		const user = await getCurrentUser();
 		if (!user) {
 			throw Error("User not authenticated");
 		}
-
-		
 
 		const subscription = await db.subscription.findUnique({
 			where: {
@@ -41,13 +40,14 @@ export const cancelPricing = async () => {
 
 		await db.subscription.update({
 			where: {
-				polarSubscriptionId: subscription.polarSubscriptionId,
-				userId: user.id,
+				id: subscription.id,
 			},
 			data: {
 				status: "CANCELED",
 			},
 		});
+
+		revalidatePath(pathname);
 
 		return {
 			success: "Successfully subscription cancelled",

@@ -2,13 +2,15 @@ import { useTransition } from "react";
 import { cancelPricing } from "../actions/cancel-subscription";
 import { toast } from "sonner";
 import { unCancelPricing } from "../actions/uncancel-subscription";
+import { usePathname } from "next/navigation";
 
 export const useActivePricing = () => {
+	const pathname = usePathname()
 	const [isPending, startTransition] = useTransition();
 
 	const handleCancel = async () => {
 		startTransition(() => {
-			cancelPricing()
+			cancelPricing(pathname)
 				.then(() => {
 					toast.success("Successfully cancelled.");
 				})
@@ -19,9 +21,9 @@ export const useActivePricing = () => {
 	};
 	const handelUnCancel = async () => {
 		startTransition(() => {
-			unCancelPricing()
+			unCancelPricing(pathname)
 				.then(() => {
-					toast.success("Successfully cancelled.");
+					toast.success("Successfully reactivated.");
 				})
 				.catch((e) => {
 					toast.error(e.message);
