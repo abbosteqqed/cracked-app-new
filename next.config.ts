@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
 			{ hostname: "*r2.cloudflarestorage.com" },
 		],
 	},
+	skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;

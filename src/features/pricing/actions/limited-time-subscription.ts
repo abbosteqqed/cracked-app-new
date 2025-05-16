@@ -26,11 +26,11 @@ export const limitedTimeSubscription = async ({
 // Free Plan Subscription
 const freePlanSubscription = async () => {
 	try {
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			return { error: "User not authenticated." };
 		}
-		const user = res.user;
+	
 		if (!user.customerId) {
 			const customer = await createCustomerByEmail({
 				email: user.email,
@@ -92,11 +92,11 @@ const freePlanSubscription = async () => {
 // Limited Base Plan Subscription
 const limitedBasePlanSubscription = async () => {
 	try {
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			return { error: "User not authenticated." };
 		}
-		const user = res.user;
+
 		if (!user.customerId) {
 			const customer = await createCustomerByEmail({
 				email: user.email,

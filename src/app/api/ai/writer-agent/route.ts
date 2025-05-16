@@ -39,13 +39,13 @@ export async function POST(request: NextRequest) {
 		}
 
 		// Run parallel queries for data we need
-		const [res, chat] = await Promise.all([getCurrentUser(), getChatById(id)]);
+		const [user, chat] = await Promise.all([getCurrentUser(), getChatById(id)]);
 
 		// Auth check
-		if (!res) {
+		if (!user) {
 			return new Response("Unauthorized", { status: 401 });
 		}
-		const user = res.user;
+		
 
 		// Chat existence check
 		if (!chat) {

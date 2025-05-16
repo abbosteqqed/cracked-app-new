@@ -11,12 +11,10 @@ export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 
 	try {
 		// Get authenticated user
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			throw Error("Unauthorized access");
 		}
-
-		const user = res.user;
 
 		const chat = await db.chat.findUnique({
 			where: { id: chatId, userId: user.id },

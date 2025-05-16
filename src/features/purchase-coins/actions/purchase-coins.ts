@@ -9,13 +9,13 @@ import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 
 export const purchaseCoins = async ({ id }: { id: string }) => {
 	try {
-		const data = await getCurrentUser();
-		if (!data) {
+		const user = await getCurrentUser();
+		if (!user) {
 			return {
 				error: "User not found",
 			};
 		}
-		const user = data.user;
+
 		const checkout = await polar.checkouts.create({
 			products: [id],
 			customerEmail: user.email,

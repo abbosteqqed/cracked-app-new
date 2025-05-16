@@ -2,21 +2,22 @@
 
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import { headers } from "next/headers";
+import { headers as nextHeader } from "next/headers";
 
 export const getCurrentUser = async () => {
+	const headers = await nextHeader();
 	try {
 		// Get session
 		const session = await auth.api.getSession({
-			headers: await headers(),
+			headers,
 		});
 
 		// If no session, sign out and return null
 		if (!session) {
 			await auth.api.signOut({
-				headers: await headers(),
+				headers,
 			});
-			return null;
+			throw Error("User not found!");
 		}
 
 		// Fetch user with subscription and credit info
@@ -46,13 +47,13 @@ export const getCurrentUser = async () => {
 
 		// If user not found in DB, sign out and return null
 		if (!user) {
-			await auth.api.signOut({ headers: await headers() });
-			return null;
+			await auth.api.signOut({ headers });
+			throw Error("User not found!");
 		}
 
-		return { user };
+		return user;
 	} catch (error) {
 		console.error("Error in getCurrentUser:", error);
-		return null;
+		throw Error("Something went wrongly");
 	}
 };
