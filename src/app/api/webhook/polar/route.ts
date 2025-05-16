@@ -23,4 +23,7 @@ export const POST = Webhooks({
 	onSubscriptionUpdated: async (payload) => {
 		await subscriptionUpdated(payload.data);
 	},
+	onSubscriptionCanceled: async (payload) => {
+		await subscriptionUpdated(payload.data);
+	},
 });
