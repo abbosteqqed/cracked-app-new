@@ -7,11 +7,10 @@ import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 
 export const unCancelPricing = async () => {
 	try {
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			throw Error("User not authenticated");
 		}
-		const user = res.user;
 		const subscription = await db.subscription.findUnique({
 			where: {
 				userId: user.id,

@@ -9,13 +9,13 @@ export const createWriterChat = async (
 	knowledgeItems: Knowledge[]
 ) => {
 	try {
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			return {
 				error: "User not found",
 			};
 		}
-		const user = res.user;
+
 		const agent = await db.writerAgent.create({
 			data: {
 				name: data.persona.name,

@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState, useTransition } from "react";
 import AuthWrapper from "./auth-wrapper";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,6 @@ import { emailVerification } from "../actions/email-verification";
 
 const EmailVerification = () => {
 	const searchParams = useSearchParams();
-	const router = useRouter();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 	const [isPending, startTransition] = useTransition();
@@ -36,14 +35,15 @@ const EmailVerification = () => {
 				{successMessage && (
 					<div className="flex items-center justify-between py-6 flex-col w-full gap-4">
 						<p className="text-center text-green-500">{successMessage}</p>{" "}
-						<Button
-							disabled={isPending}
-							onClick={() => router.push("/auth/signin")}
-							className="w-full"
-							type="button">
-							<span>Proceed to Login</span>
-							<ArrowRight className="size-4" />
-						</Button>
+						<a href="/auth/signin">
+							<Button
+								disabled={isPending}
+								className="w-full"
+								type="button">
+								<span>Proceed to Login</span>
+								<ArrowRight className="size-4" />
+							</Button>
+						</a>
 					</div>
 				)}
 				{errorMessage && (
@@ -59,24 +59,30 @@ const EmailVerification = () => {
 						{errorMessage !== "Your verification token has expired." &&
 							errorMessage !==
 								"The verification link is invalid. Please check your email or request a new link." && (
-								<Button
-									disabled={isPending}
-									onClick={() => router.push("/auth/send-email-verification")}
-									className="w-full"
-									type="button">
-									<span>Request New Verification Email</span>{" "}
-									<ArrowRight className="size-4" />
-								</Button>
+								<a
+									href="/auth/send-email-verification"
+									className="w-full">
+									<Button
+										disabled={isPending}
+										className="w-full"
+										type="button">
+										<span>Request New Verification Email</span>{" "}
+										<ArrowRight className="size-4" />
+									</Button>
+								</a>
 							)}
 
-						<Button
-							disabled={isPending}
-							onClick={() => router.push("/auth/signin")}
-							className="w-full"
-							type="button"
-							variant="outline">
-							<span>Back to Login</span> <ArrowRight className="size-4" />
-						</Button>
+						<a
+							href="/auth/signin"
+							className="w-full">
+							<Button
+								disabled={isPending}
+								className="w-full"
+								type="button"
+								variant="outline">
+								<span>Back to Login</span> <ArrowRight className="size-4" />
+							</Button>
+						</a>
 					</div>
 				)}
 				{isPending && (

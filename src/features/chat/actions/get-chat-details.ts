@@ -6,17 +6,17 @@ import db from "@/lib/db";
 
 export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 	if (!chatId) {
-		throw Error("Chat ID is required");
+		return {
+			chat: null,
+		};
 	}
 
 	try {
 		// Get authenticated user
-		const res = await getCurrentUser();
-		if (!res) {
+		const user = await getCurrentUser();
+		if (!user) {
 			throw Error("Unauthorized access");
 		}
-
-		const user = res.user;
 
 		const chat = await db.chat.findUnique({
 			where: { id: chatId, userId: user.id },
@@ -50,7 +50,9 @@ export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 		});
 
 		if (!chat) {
-			throw Error("Chat not found");
+			return {
+				chat: null,
+			};
 		}
 
 		// Check if user owns this chat

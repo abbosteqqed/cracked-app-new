@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { SIGN_IN_WITH_OTP_LINK } from "@/lib/constants/links";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlinePassword } from "react-icons/md";
@@ -20,7 +19,6 @@ const AuthWrapper = ({
 	subtitle,
 	showSocials = false,
 }: AuthWrapperProps) => {
-	const router = useRouter();
 	const handleGoogleSignin = async () => {
 		await authClient.signIn.social({ provider: "google" });
 	};
@@ -48,12 +46,16 @@ const AuthWrapper = ({
 							variant="outline">
 							<FcGoogle /> Login With Google
 						</Button>
-						<Button
-							type="button"
-							onClick={() => router.push(SIGN_IN_WITH_OTP_LINK)}
-							variant="outline">
-							<MdOutlinePassword /> Login With OTP
-						</Button>
+						<a
+							href={SIGN_IN_WITH_OTP_LINK}
+							className="w-full">
+							<Button
+								type="button"
+								className="w-full"
+								variant="outline">
+								<MdOutlinePassword /> Login With OTP
+							</Button>
+						</a>
 					</div>
 				</>
 			)}

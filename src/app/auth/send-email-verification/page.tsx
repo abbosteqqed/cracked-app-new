@@ -1,8 +1,12 @@
 import EmailVerificationForm from "@/features/auth/components/email-verification-form";
-import React from "react";
+import React, { Suspense } from "react";
 
 const EmailVerificationPage = () => {
-	return <EmailVerificationForm />
+	return (
+		<Suspense>
+			<EmailVerificationForm />
+		</Suspense>
+	);
 };
 
 export default EmailVerificationPage;

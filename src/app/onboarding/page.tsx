@@ -4,11 +4,11 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const OnboardingPage = async() => {
-	const currentUser = await getCurrentUser()
-	if(!currentUser){
+	const user = await getCurrentUser()
+	if(!user){
 		return redirect("/auth/signin")
 	}
-	if(!currentUser.user.onboarding){
+	if(!user.onboarding){
 		return redirect("/app");
 	}
 	return (
