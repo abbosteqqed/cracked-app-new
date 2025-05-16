@@ -1,8 +1,6 @@
 "use server";
 import { Subscription } from "@polar-sh/sdk/models/components/subscription.js";
 import db from "../db";
-import { getSubscriptionById } from "@/features/pricing/actions/polar";
-import { removeSubscriptionById } from "@/features/pricing/actions/remove-subscription-by-id";
 
 export const subscriptionActive = async (data: Subscription) => {
 	const getCredits = (productId: string): number => {
@@ -32,14 +30,6 @@ export const subscriptionActive = async (data: Subscription) => {
 			},
 		});
 		if (existingSubscription) {
-			if (existingSubscription.polarSubscriptionId) {
-				const pols = await getSubscriptionById(
-					existingSubscription.polarSubscriptionId
-				);
-				if (pols) {
-					await removeSubscriptionById(pols.id);
-				}
-			}
 			await db.subscription.update({
 				where: {
 					userId: user.id,
