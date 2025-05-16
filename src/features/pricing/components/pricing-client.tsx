@@ -1,14 +1,15 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import React, { lazy } from "react";
 import SUBSCRIPTION_PLANS from "@/lib/constants/subscription-plans";
 import { toast } from "sonner";
 import { upgradeSubscription } from "../actions/upgrade-subscription";
 import { PolarEmbedCheckout } from "@polar-sh/checkout/embed";
 import { SubscriptionStatus } from "@prisma/client";
-import PricingCardGradient from "./priciing-card-gradient";
-import ActivePlanCard from "./active-plan-card";
 
+const ActivePlanCard = lazy(() => import("./active-plan-card"));
+
+const PricingCardGradient = lazy(() => import("./priciing-card-gradient"));
 
 const PricingClient = ({
 	subscription,

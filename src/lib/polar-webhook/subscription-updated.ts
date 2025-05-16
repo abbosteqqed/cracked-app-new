@@ -1,7 +1,6 @@
 "use server";
 import { Subscription } from "@polar-sh/sdk/models/components/subscription.js";
 import db from "../db";
-import { subscriptionActive } from "./subscription-active";
 
 export const subscriptionUpdated = async (data: Subscription) => {
 	if (data.status === "active") {
@@ -12,24 +11,48 @@ export const subscriptionUpdated = async (data: Subscription) => {
 		});
 
 		if (user) {
-			await subscriptionActive(data);
+			const subscription = await db.subscription.findUnique({
+				where: {
+					userId: user.id,
+					polarSubscriptionId: data.id,
+				},
+			});
+			if (subscription) {
+				await db.subscription.update({
+					where: {
+						userId: user.id,
+						polarSubscriptionId: data.id,
+					},
+					data: {
+						status: "ACTIVE",
+					},
+				});
+			}
 		}
 	}
 	if (data.status === "canceled") {
-		const subscription = await db.subscription.findFirst({
+		const user = await db.user.findFirst({
 			where: {
-				polarSubscriptionId: data.id,
+				customerId: data.customerId,
 			},
 		});
-		if (subscription) {
-			await db.subscription.update({
+		if (user) {
+			const subscription = await db.subscription.findUnique({
 				where: {
-					id: subscription.id,
-				},
-				data: {
-					status: "CANCELED",
+					userId: user.id,
+					polarSubscriptionId: data.id,
 				},
 			});
+			if (subscription) {
+				await db.subscription.update({
+					where: {
+						id: subscription.id,
+					},
+					data: {
+						status: "CANCELED",
+					},
+				});
+			}
 		}
 	}
 };
