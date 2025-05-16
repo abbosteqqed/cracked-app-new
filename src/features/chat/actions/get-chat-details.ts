@@ -6,7 +6,9 @@ import db from "@/lib/db";
 
 export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 	if (!chatId) {
-		throw Error("Chat ID is required");
+		return {
+			chat: null,
+		};
 	}
 
 	try {
@@ -48,7 +50,9 @@ export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 		});
 
 		if (!chat) {
-			throw Error("Chat not found");
+			return {
+				chat: null,
+			};
 		}
 
 		// Check if user owns this chat

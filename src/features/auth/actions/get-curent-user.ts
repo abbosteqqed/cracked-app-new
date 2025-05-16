@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import db from "@/lib/db";
 import { headers as nextHeader } from "next/headers";
 
+
 export const getCurrentUser = async () => {
 	const headers = await nextHeader();
 	try {

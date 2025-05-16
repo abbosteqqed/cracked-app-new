@@ -1,10 +1,10 @@
-'use client';
-import ChatMultiModalInput from './chat-multimodal-input';
-import { Attachment, Message } from 'ai';
-import React, { useEffect, useState } from 'react';
-import { useChat } from '@ai-sdk/react';
-import { Messages } from './messages';
-import { toast } from 'sonner';
+"use client";
+import ChatMultiModalInput from "./chat-multimodal-input";
+import { Attachment, Message } from "ai";
+import React, { Suspense, useEffect, useState } from "react";
+import { useChat } from "@ai-sdk/react";
+import { Messages } from "./messages";
+import { toast } from "sonner";
 
 const ChatClient = ({
 	chatId,
@@ -17,18 +17,18 @@ const ChatClient = ({
 
 	const { messages, handleSubmit, input, setInput, isLoading, stop, reload } =
 		useChat({
-			api: '/api/ai/writer-agent',
+			api: "/api/ai/writer-agent",
 			id: chatId,
-			body: { id: chatId, selectedChatModel: 'pro' },
+			body: { id: chatId, selectedChatModel: "pro" },
 			initialMessages: initialMessages,
-			onError: error => {
+			onError: (error) => {
 				toast.error(error.message);
 			},
 		});
 
 	useEffect(() => {
 		console.log(attachments);
-	},[attachments]);
+	}, [attachments]);
 
 	return (
 		<>
@@ -37,16 +37,18 @@ const ChatClient = ({
 				isLoading={isLoading}
 				reload={reload}
 			/>
-			<ChatMultiModalInput
-				chatId={chatId}
-				handleSubmit={handleSubmit}
-				isLoading={isLoading}
-				attachments={attachments}
-				setAttachments={setAttachments}
-				stop={stop}
-				input={input}
-				setInput={setInput}
-			/>
+			<Suspense>
+				<ChatMultiModalInput
+					chatId={chatId}
+					handleSubmit={handleSubmit}
+					isLoading={isLoading}
+					attachments={attachments}
+					setAttachments={setAttachments}
+					stop={stop}
+					input={input}
+					setInput={setInput}
+				/>
+			</Suspense>
 		</>
 	);
 };
