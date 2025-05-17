@@ -29,7 +29,7 @@ const AppLayout = async ({ children }: AppLayoutProps) => {
 					subscription={user.subscription}
 					credits={user.credits}
 				/>
-				{children}
+				<div className="w-full px-6">{children}</div>
 				<Toaster />
 			</>
 		</>
