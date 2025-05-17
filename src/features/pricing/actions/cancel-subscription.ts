@@ -31,7 +31,7 @@ export const cancelPricing = async (pathname: string) => {
 			throw Error("Subscription not found");
 		}
 
-		await polar.subscriptions.update({
+		const res = await polar.subscriptions.update({
 			id: subscription.polarSubscriptionId,
 			subscriptionUpdate: {
 				cancelAtPeriodEnd: true,
@@ -44,6 +44,8 @@ export const cancelPricing = async (pathname: string) => {
 			},
 			data: {
 				status: "CANCELED",
+				endDate: res.endsAt,
+				renewalDate: null,
 			},
 		});
 
@@ -53,6 +55,7 @@ export const cancelPricing = async (pathname: string) => {
 			success: "Successfully subscription cancelled",
 		};
 	} catch (error) {
+		console.log(error);
 		throw error;
 	}
 };

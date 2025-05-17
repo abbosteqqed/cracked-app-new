@@ -34,6 +34,7 @@ export const getCurrentUser = async () => {
 						name: true,
 						status: true,
 						endDate: true,
+						renewalDate: true,
 					},
 				},
 				credits: {

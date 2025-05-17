@@ -32,7 +32,7 @@ export const unCancelPricing = async (pathname: string) => {
 			throw Error("Subscription not found");
 		}
 
-		await polar.subscriptions.update({
+		const res = await polar.subscriptions.update({
 			id: subscriptionId,
 			subscriptionUpdate: {
 				cancelAtPeriodEnd: false,
@@ -45,6 +45,8 @@ export const unCancelPricing = async (pathname: string) => {
 			},
 			data: {
 				status: "ACTIVE",
+				renewalDate: res.currentPeriodEnd,
+				endDate: null,
 			},
 		});
 
