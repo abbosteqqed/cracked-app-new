@@ -1,5 +1,4 @@
-import { betterFetch } from "@better-fetch/fetch";
-import type { auth } from "@/lib/auth";
+import { getSessionCookie } from "better-auth/cookies";
 import { NextRequest, NextResponse } from "next/server";
 import {
 	authApiPrefix,
@@ -7,7 +6,6 @@ import {
 	webhookPrefix,
 } from "./lib/constants/route";
 
-type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
 	const pathname = request.nextUrl.pathname;
@@ -19,15 +17,7 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	const { data: session } = await betterFetch<Session>(
-		"/api/auth/get-session",
-		{
-			baseURL: request.nextUrl.origin,
-			headers: {
-				cookie: request.headers.get("cookie") || "",
-			},
-		}
-	);
+	const session = getSessionCookie(request);
 
 	if (!session && !authRoutes.includes(pathname)) {
 		return NextResponse.redirect(new URL("/auth/signin", request.url));

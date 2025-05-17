@@ -16,11 +16,11 @@ const NavbarRight = ({ subscription, credits }: NavbarRight) => {
 	return (
 		<div className="flex items-center gap-2">
 			{subscription && (
-				<a
+				<Link
 					href="/app/pricing"
 					className="text-sm px-3 py-1 rounded-lg border border-slate-6 bg-slate-3 text-neutral-100">
 					{subscription.name}
-				</a>
+				</Link>
 			)}
 			{credits && (
 				<Link

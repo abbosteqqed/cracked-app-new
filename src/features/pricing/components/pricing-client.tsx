@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import SUBSCRIPTION_PLANS from "@/lib/constants/subscription-plans";
 import { toast } from "sonner";
 import { upgradeSubscription } from "../actions/upgrade-subscription";
@@ -47,19 +47,23 @@ const PricingClient = ({
 						veritatis libero suscipit magni rerum, numquam quidem hic impedit!
 						Facilis, ab.
 					</p>
-					<div className="grid grid-cols-3 gap-4 mt-10">
-						{SUBSCRIPTION_PLANS.map((item) => (
-							<PricingCardGradient
-								key={item.id}
-								item={item}
-								isPending={subscribePending}
-								handleSubscribe={handleSubscribe}
-							/>
-						))}
-					</div>
+					<Suspense>
+						<div className="grid grid-cols-3 gap-4 mt-10">
+							{SUBSCRIPTION_PLANS.map((item) => (
+								<PricingCardGradient
+									key={item.id}
+									item={item}
+									isPending={subscribePending}
+									handleSubscribe={handleSubscribe}
+								/>
+							))}
+						</div>
+					</Suspense>
 				</div>
 			) : (
-				<ActivePlanCard subsription={subscription} />
+				<Suspense>
+					<ActivePlanCard subsription={subscription} />
+				</Suspense>
 			)}
 		</>
 	);
