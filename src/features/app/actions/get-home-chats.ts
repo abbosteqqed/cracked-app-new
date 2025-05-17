@@ -2,12 +2,13 @@
 
 import { auth } from "@/lib/auth";
 import db from "@/lib/db";
-import { headers } from "next/headers";
+import { headers as headerS } from "next/headers";
 
 export const getHomeChats = async () => {
+	const headers = await headerS();
 	try {
 		const session = await auth.api.getSession({
-			headers: await headers(),
+			headers,
 		});
 
 		if (!session) {
