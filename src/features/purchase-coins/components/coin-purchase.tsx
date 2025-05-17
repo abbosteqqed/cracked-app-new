@@ -43,8 +43,7 @@ const CoinPurchase = () => {
 	return (
 		<div className="py-20 px-6">
 			<div className="max-w-5xl mx-auto w-full bg-slate-3 border border-slate-6 p-6 rounded-2xl flex flex-col">
-				<h1 className="md:text-3xl text-2xl font-semibold">Buy Connects</h1>
-				<div className="flex flex-col max-w-xl w-full mt-10 gap-2">
+				<div className="flex flex-col max-w-xl w-full gap-2">
 					<Label>Select the amount to buy</Label>
 					<Select
 						value={selectedProduct}
@@ -78,7 +77,7 @@ const CoinPurchase = () => {
 						type="button"
 						disabled={isPending}
 						onClick={handleBuyProducts}>
-						Buy Credits
+						{isPending ? "Buy Credits..." : "Buy Credits"}
 					</Button>
 				</div>
 			</div>
