@@ -11,7 +11,7 @@ export const usedTokensUpdate = async (
 	const inputPrice = (input / 1000000) * 0.4;
 	const outputPrice = (output / 1000000) * 1.4;
 	const totalPrice = inputPrice + outputPrice;
-	const credits = Math.ceil((totalPrice * 2000000) / 15);
+	const credits = Math.ceil((totalPrice * 2000000) / 14);
 
 	const existingTokes = await db.credits.findUnique({
 		where: {

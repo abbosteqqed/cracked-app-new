@@ -14,7 +14,6 @@ import {
 import { NextRequest } from "next/server";
 import cuid from "cuid";
 import { creditsToOutput } from "@/lib/token-counter";
-import { pusherServer } from "@/lib/pusher";
 import { retrieveKnowledge } from "@/features/chat/actions/retrive-knowledge";
 import { getChatById } from "@/features/chat/actions/get-chat-by-id";
 import { updateChatTitle } from "@/features/chat/actions/update-chat-title";
@@ -144,15 +143,12 @@ export async function POST(request: NextRequest) {
 							});
 
 							// Wait for both operations to complete
-							const [tokenResult] = await Promise.all([
+							await Promise.all([
 								updateTokensPromise,
 								saveResponsePromise,
 							]);
 
-							// Trigger pusher event if tokens were updated
-							if (tokenResult?.tokens) {
-								pusherServer.trigger(user.id, "tokens", tokenResult.tokens);
-							}
+							
 						} catch (err) {
 							console.error("Error in onFinish handler:", err);
 						}
