@@ -198,6 +198,15 @@ model WriterAgent {
   updatedAt           DateTime @updatedAt
 }
 
+model PdfAgent{
+  id                  String   @id @default(cuid())
+  name                String
+  description         String
+  fileName            String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
 enum KnowledgeType {
   website
   pdffile
