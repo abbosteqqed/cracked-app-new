@@ -1,20 +1,21 @@
 import { S3Client } from "@aws-sdk/client-s3";
+import { env } from "../config";
 
 export const cloudflareR2 = {
 	chatAttachmentDirectoryName: "chat-attachments",
 	agentAvatarDirectoryName: "agent-avatar",
-	baseUrl: process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL as string,
+	
 	allowedMimeTypes: ["image/jpeg", "image/png", "application/pdf"],
 	maxFileSizeMb: 5,
 	expiresIn: 5 * 60 * 60,
-	bucket: "test-cracked",
+	bucket: env.CLOUDFLAER_BUCKET_NAME,
 } as const;
 
 export const r2Client = new S3Client({
 	region: "auto",
-	endpoint: process.env.CLOUDFLARE_ENDPOINT as string,
+	endpoint: env.CLOUDFLARE_ENDPOINT as string,
 	credentials: {
-		accessKeyId: process.env.CLOUDFLARE_ACCESS_KEY_ID as string,
-		secretAccessKey: process.env.CLOUDFLARE_SECRET_ACCESS_KEY_ID as string,
+		accessKeyId: env.CLOUDFLARE_ACCESS_KEY_ID as string,
+		secretAccessKey: env.CLOUDFLARE_SECRET_ACCESS_KEY_ID as string,
 	},
 });

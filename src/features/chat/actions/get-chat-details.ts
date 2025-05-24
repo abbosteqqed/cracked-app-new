@@ -29,21 +29,8 @@ export const getChatDetails = async ({ chatId }: { chatId?: string }) => {
 				createdAt: true,
 				updatedAt: true,
 				messages: {
-					select: {
-						id: true,
-						content: true,
-						role: true,
-						createdAt: true,
-						updatedAt: true,
-						chatId: true,
-						experimental_attachments: {
-							select: {
-								id: true,
-								name: true,
-								contentType: true,
-								url: true,
-							},
-						},
+					include: {
+						experimental_attachments: true,
 					},
 				},
 			},

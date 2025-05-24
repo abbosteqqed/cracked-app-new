@@ -1,11 +1,8 @@
 "use server";
 
-
-
-
-
 import { polar } from "@/lib/polar";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { env } from "@/lib/config";
 
 export const purchaseCoins = async ({ id }: { id: string }) => {
 	try {
@@ -20,8 +17,8 @@ export const purchaseCoins = async ({ id }: { id: string }) => {
 			products: [id],
 			customerEmail: user.email,
 			customerId: user.customerId,
-			embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
-			successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+			embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
+			successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
 		});
 
 		return {

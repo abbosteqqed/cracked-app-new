@@ -37,7 +37,7 @@ const useChatInput = ({
 	};
 
 	const submitForm = useCallback(() => {
-		window.history.replaceState({}, '', `/app/chat/${chatId}`);
+		
 
 		handleSubmit(undefined, { experimental_attachments: attachments });
 

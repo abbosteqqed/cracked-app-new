@@ -1,6 +1,7 @@
 
 import { formatDate } from '@/lib/format-date';
 import { ArrowRightIcon } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 interface ChatHistoryCardProps {
@@ -15,9 +16,15 @@ const ChatHistoryCard = ({
 	name,
 	id,
 }: ChatHistoryCardProps) => {
+	const chatUrl = ()=>{
+		if(agentType === 'pdf-agent'){
+			return `/app/chat-pdf/${id}`;
+		}
+		return `/app/chat/${id}`;
+	}
 	return (
-		<a
-			href={`/app/chat/${id}`}
+		<Link
+			href={chatUrl()}
 			className='bg-slate-3 rounded-xl p-5 shadow-lg border border-slate-6 hover:ring-2 hover:ring-slate-7 transition-all duration-300 relative overflow-hidden group'
 		>
 			<div className='flex justify-between items-start mb-4'>
@@ -37,7 +44,7 @@ const ChatHistoryCard = ({
 				{name}
 			</h3>
 			<div className='absolute inset-0 bg-linear-to-br from-[#2A2A2A] via-transparent to-transparent opacity-0 hover:opacity-20 transition-opacity duration-300 rounded-xl'></div>
-		</a>
+		</Link>
 	);
 };
 

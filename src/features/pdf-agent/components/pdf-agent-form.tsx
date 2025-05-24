@@ -47,7 +47,7 @@ const PdfAgentForm = () => {
 					.then((data) => {
 						setFile(null);
 						form.reset();
-						router.push(`/chat-pdf/${data.id}`);
+						router.push(`/app/chat-pdf/${data.id}`);
 					})
 					.catch((e) => {
 						toast.error(e.message);
@@ -85,9 +85,10 @@ const PdfAgentForm = () => {
 					errorMessage={form.formState.errors.root?.message}
 				/>
 				<Button
+					disabled={isPending}
 					type="submit"
 					className="mt-10 max-w-[120px]">
-					Create chat
+					{isPending ? "Creating chat..." : "Create chat"}
 				</Button>
 			</form>
 		</Form>

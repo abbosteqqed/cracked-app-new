@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import db from "@/lib/db";
 import { createCustomerByEmail } from "./polar";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { env } from "@/lib/config";
 
 interface LimitedTimeSubscription {
 	plan: string;
@@ -30,7 +31,7 @@ const freePlanSubscription = async () => {
 		if (!user) {
 			return { error: "User not authenticated." };
 		}
-	
+
 		if (!user.customerId) {
 			const customer = await createCustomerByEmail({
 				email: user.email,
@@ -49,8 +50,8 @@ const freePlanSubscription = async () => {
 					customerId: customer.id,
 					customerEmail: customer.email,
 					products: ["07acff71-dc51-4bee-9340-6e7bf0186484"],
-					embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
-					successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+					embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
+					successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
 					allowDiscountCodes: false,
 					metadata: {
 						userId: user.id,
@@ -69,8 +70,8 @@ const freePlanSubscription = async () => {
 			customerId: user.customerId,
 			customerEmail: user.email,
 			products: ["07acff71-dc51-4bee-9340-6e7bf0186484"],
-			successUrl: process.env.CHECKOUT_SUCCESS_URL!,
-			embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
+			successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
+			embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
 			allowDiscountCodes: false,
 			metadata: {
 				userId: user.id,
@@ -116,8 +117,8 @@ const limitedBasePlanSubscription = async () => {
 					customerEmail: customer.email,
 					discountId: "ff97279c-ef8d-47ef-b2ff-4b36551fd12e",
 					products: ["9ed397a2-98e2-45df-a49c-4a6a46b5dbed"],
-					embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
-					successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+					embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
+					successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
 					allowDiscountCodes: false,
 					metadata: {
 						userId: user.id,
@@ -137,8 +138,8 @@ const limitedBasePlanSubscription = async () => {
 			customerEmail: user.email,
 			discountId: "ff97279c-ef8d-47ef-b2ff-4b36551fd12e",
 			products: ["9ed397a2-98e2-45df-a49c-4a6a46b5dbed"],
-			successUrl: process.env.CHECKOUT_SUCCESS_URL!,
-			embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
+			successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
+			embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
 			allowDiscountCodes: false,
 			metadata: {
 				userId: user.id,

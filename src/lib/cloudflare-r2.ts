@@ -46,7 +46,7 @@ export async function uploadFileToR2(file: File): Promise<FileUploadResult> {
 
 	const id = cuid();
 	const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-	const filename = `${id}-${Date.now()}-${safeFilename}`;
+	const filename = `${id}-${safeFilename}`;
 
 	try {
 		const bytes = await file.arrayBuffer();

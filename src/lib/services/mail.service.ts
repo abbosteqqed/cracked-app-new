@@ -3,14 +3,15 @@ import { emailConfirmEmailHTML } from "@/components/email/email-verification";
 import { otpHTML } from "@/components/email/otp-email-template";
 import { resetPasswordEmailHTML } from "@/components/email/reset-password-email";
 import { Resend } from "resend";
+import { env } from "../config";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(env.RESEND_API_KEY);
 
 const from = `noreply@updates.crcked.com`;
 
 export const sendVerificationEmail = async (email: string, token: string) => {
 	try {
-		const link = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/auth/new-verification?token=${token}`;
+		const link = `${env.NEXT_PUBLIC_WEBSITE_URL}/auth/new-verification?token=${token}`;
 		const html = await emailConfirmEmailHTML({ link });
 
 		await resend.emails.send({
@@ -26,7 +27,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
 	try {
-		const link = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/auth/reset-password?token=${token}`;
+		const link = `${env.NEXT_PUBLIC_WEBSITE_URL}/auth/reset-password?token=${token}`;
 
 		const html = await resetPasswordEmailHTML({ link });
 

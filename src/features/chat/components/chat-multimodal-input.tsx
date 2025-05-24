@@ -1,26 +1,30 @@
-'use client';
-import React from 'react';
-import { Textarea } from '@/components/ui/textarea';
-import { useChat } from 'ai/react';
-import { PaperclipIcon } from 'lucide-react';
-import { PreviewAttachment } from './preview-attachment';
-import useChatInput from '@/lib/hooks/use-chat-input';
-import ChatSendButton from './chat-send-button';
-import ChatStopButton from './chat-stop-button';
-import { Attachment } from 'ai'
+"use client";
+import React from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { useChat } from "ai/react";
+import { PaperclipIcon } from "lucide-react";
+import { PreviewAttachment } from "./preview-attachment";
+import useChatInput from "@/lib/hooks/use-chat-input";
+import ChatSendButton from "./chat-send-button";
+import ChatStopButton from "./chat-stop-button";
+import { Attachment } from "ai";
 
 interface ChatMultiModalInputProps {
 	isLoading?: boolean;
 	chatId: string;
-	handleSubmit: ReturnType<typeof useChat>['handleSubmit'];
+	handleSubmit: ReturnType<typeof useChat>["handleSubmit"];
 	attachments: Array<Attachment>;
 	setAttachments: React.Dispatch<React.SetStateAction<Array<Attachment>>>;
 	stop: () => void;
 	input: string;
 	setInput: (value: string) => void;
+	showFile?: boolean;
 }
 
-const ChatMultiModalInput = (props: ChatMultiModalInputProps) => {
+const ChatMultiModalInput = ({
+	showFile = true,
+	...props
+}: ChatMultiModalInputProps) => {
 	const {
 		fileInputRef,
 		handleFileChange,
@@ -84,13 +88,17 @@ const ChatMultiModalInput = (props: ChatMultiModalInputProps) => {
 					}}
 				/>
 				<div className="flex justify-between items-center py-1 pb-3 px-3">
-					<button
-						disabled={isLoading || uploadQueue.length > 0}
-						type="button"
-						onClick={() => fileInputRef.current?.click()}
-						className="size-8 flex justify-center items-center hover:bg-[rgba(255,255,255,0.1)] text-white transition-colors rounded-md">
-						<PaperclipIcon className="size-4 " />
-					</button>
+					{showFile ? (
+						<button
+							disabled={isLoading || uploadQueue.length > 0}
+							type="button"
+							onClick={() => fileInputRef.current?.click()}
+							className="size-8 flex justify-center items-center hover:bg-[rgba(255,255,255,0.1)] text-white transition-colors rounded-md">
+							<PaperclipIcon className="size-4 " />
+						</button>
+					) : (
+						<div></div>
+					)}
 					{isLoading ? (
 						<ChatStopButton
 							uploadQueue={uploadQueue}

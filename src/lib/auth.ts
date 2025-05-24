@@ -11,10 +11,11 @@ import {
 } from "./services/mail.service";
 import db from "./db";
 import { polar } from "./polar";
+import { env } from "./config";
 
 export const auth = betterAuth({
 	appName: "cracked",
-	baseURL: process.env.NEXT_PUBLIC_WEBSITE_URL,
+	baseURL: env.NEXT_PUBLIC_WEBSITE_URL,
 	database: prismaAdapter(db, {
 		provider: "postgresql",
 	}),
@@ -38,8 +39,8 @@ export const auth = betterAuth({
 
 	socialProviders: {
 		google: {
-			clientId: process.env.GOOGLE_CLIENT_ID!,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+			clientId: env.GOOGLE_CLIENT_ID!,
+			clientSecret: env.GOOGLE_CLIENT_SECRET!,
 		},
 	},
 	session: {

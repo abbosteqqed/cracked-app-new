@@ -1,6 +1,7 @@
 "use server";
 
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
+import { env } from "@/lib/config";
 import db from "@/lib/db";
 import { polar } from "@/lib/polar";
 
@@ -22,8 +23,8 @@ export const upgradeSubscription = async (productId: string) => {
 				products: [productId],
 				customerId: user.customerId,
 				customerEmail: user.email,
-				embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
-				successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+				embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
+				successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
 			});
 
 			return {
@@ -36,8 +37,8 @@ export const upgradeSubscription = async (productId: string) => {
 			customerId: user.customerId,
 			customerEmail: user.email,
 			subscriptionId: subscription.polarSubscriptionId,
-			embedOrigin: process.env.NEXT_PUBLIC_WEBSITE_URL,
-			successUrl: process.env.CHECKOUT_SUCCESS_URL!,
+			embedOrigin: env.NEXT_PUBLIC_WEBSITE_URL,
+			successUrl: `${env.NEXT_PUBLIC_WEBSITE_URL}/app/confirmation`,
 		});
 
 		return {

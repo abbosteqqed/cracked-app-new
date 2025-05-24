@@ -3,6 +3,7 @@
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 import { uploadFileToR2 } from "@/lib/cloudflare-r2";
 import db from "@/lib/db";
+import { savePdfToPinecone } from "@/lib/pinecone";
 
 export const createPdfAgentChat = async ({
 	name,
@@ -18,6 +19,7 @@ export const createPdfAgentChat = async ({
 			throw Error("Free subscription user has not access use pdf agent.");
 		}
 		const resFile = await uploadFileToR2(file);
+		await savePdfToPinecone(resFile.name, resFile.url);
 		const pdfAgent = await db.pdfAgent.create({
 			data: {
 				name,

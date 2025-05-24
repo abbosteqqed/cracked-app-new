@@ -1,10 +1,12 @@
 "use client";
-import ChatMultiModalInput from "./chat-multimodal-input";
+
 import { Attachment, Message } from "ai";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Messages } from "./messages";
 import { toast } from "sonner";
+
+const ChatMultiModalInput = lazy(() => import("./chat-multimodal-input"));
 
 const ChatClient = ({
 	chatId,
@@ -25,10 +27,6 @@ const ChatClient = ({
 				toast.error(error.message);
 			},
 		});
-
-	useEffect(() => {
-		console.log(attachments);
-	}, [attachments]);
 
 	return (
 		<>
