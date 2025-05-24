@@ -45,8 +45,6 @@ const PdfAgentForm = () => {
 			startTransition(() => {
 				createPdfAgentChat({ name: values.name, file })
 					.then((data) => {
-						setFile(null);
-						form.reset();
 						router.push(`/app/chat-pdf/${data.id}`);
 					})
 					.catch((e) => {
