@@ -45,7 +45,7 @@ export const getCurrentUser = async () => {
 			},
 		});
 
-		// If user not found in DB, sign out and return null
+
 		if (!user) {
 			await auth.api.signOut({ headers });
 			throw Error("User not found!");

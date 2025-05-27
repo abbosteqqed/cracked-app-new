@@ -25,7 +25,7 @@ const NavbarRight = ({ subscription, credits }: NavbarRight) => {
 			{credits && (
 				<Link
 					href="/app/purchase-coins"
-					prefetch
+
 					className="flex items-center gap-2 px-3 py-1.5">
 					<span className="text-sm ">{credits.totalCredits}</span>
 					<Image
