@@ -38,3 +38,43 @@ export const convertAIMessage = ({
 		};
 	});
 };
+
+
+export const downloadBase64AsJpg = (
+	base64String: string,
+	filename: string = "download.jpg"
+): void => {
+
+	const base64Data = base64String.includes(";base64,")
+		? base64String.split(";base64,")[1]
+		: base64String;
+
+
+	const binaryString = window.atob(base64Data);
+	const len = binaryString.length;
+	const bytes = new Uint8Array(len);
+
+
+	for (let i = 0; i < len; i++) {
+		bytes[i] = binaryString.charCodeAt(i);
+	}
+
+
+	const blob = new Blob([bytes], { type: "image/jpeg" });
+
+
+	const url = URL.createObjectURL(blob);
+
+	
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = filename.endsWith(".jpg") ? filename : `${filename}.jpg`;
+	document.body.appendChild(link);
+
+
+	link.click();
+
+
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
+};
