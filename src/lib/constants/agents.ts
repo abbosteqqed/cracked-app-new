@@ -11,6 +11,12 @@ const AGENTS = [
 		description:
 			"Chat directly with your PDF documents to get instant answers and insights.",
 	},
+	{
+		slug: "headshot-generator",
+		name: "Headshot Generator",
+		description:
+			" Our AI generator creates professional, high-quality headshots that truly capture you – in minutes. Elevate your brand effortlessly.",
+	},
 ];
 
 export default AGENTS;
