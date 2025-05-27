@@ -1,21 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Logo from "./logo";
 import NavbarRight from "./navbar-right";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
 
-interface AppNavbarProps {
-	subscription: {
-		name: string;
-	} | null;
-	credits: {
-		totalCredits: number;
-	} | null;
-}
-
-const AppNavbar = ({ subscription, credits }: AppNavbarProps) => {
+const AppNavbar = () => {
+	const router = useRouter();
+	const { isPending, data } = useQuery({
+		queryKey: ["currentUser"],
+		queryFn: getCurrentUser,
+	});
 	const pathname = usePathname();
+
+	useEffect(() => {
+		if (data) {
+			if (data.onboarding) {
+				return router.replace("/onboarding");
+			}
+
+			if (!data.subscription) {
+				return router.replace("/limited-pricing");
+			}
+		}
+	});
 
 	if (pathname.startsWith("/app/agents")) {
 		return (
@@ -30,19 +40,34 @@ const AppNavbar = ({ subscription, credits }: AppNavbarProps) => {
 			</>
 		);
 	}
+	if (isPending) {
+		return (
+			<div className="relative w-full bg-primary-bg py-4 px-6">
+				<div className="max-w-5xl flex items-center justify-between mx-auto">
+					<Link
+						href="/app"
+						aria-label="App Home">
+						<Logo />
+					</Link>
+				</div>
+			</div>
+		);
+	}
+	if (!data) {
+		return null;
+	}
 	return (
 		<div className="relative w-full bg-primary-bg py-4 px-6">
 			<div className="max-w-5xl flex items-center justify-between mx-auto">
 				<Link
-				
 					href="/app"
 					aria-label="App Home">
 					<Logo />
 				</Link>
 
 				<NavbarRight
-					subscription={subscription}
-					credits={credits}
+					subscription={data.subscription}
+					credits={data.credits}
 				/>
 			</div>
 		</div>
