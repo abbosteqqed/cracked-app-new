@@ -23,7 +23,6 @@ const ChatHistoryCard = ({
 	};
 	return (
 		<Link
-			prefetch
 			href={chatUrl()}
 			className="bg-slate-3 rounded-xl p-5 shadow-lg border border-slate-6 hover:ring-2 hover:ring-slate-7 transition-all duration-300 relative overflow-hidden group">
 			<div className="flex justify-between items-start mb-4">

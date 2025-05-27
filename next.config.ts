@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
 		],
 	},
 	skipTrailingSlashRedirect: true,
+	reactStrictMode: true,
 };
 
 export default nextConfig;
