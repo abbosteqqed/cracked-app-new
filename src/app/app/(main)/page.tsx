@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 
 const AppPage = async() => {
 	return (
-		<div className="mt-14 grid max-w-5xl mx-auto w-full">
+		<div className="mt-14 grid max-w-5xl mx-auto w-full pb-10">
 			<RecommendedAgents />
 			<Suspense fallback={<AppHistoryLoading />}>
 				<AppHistorySection />

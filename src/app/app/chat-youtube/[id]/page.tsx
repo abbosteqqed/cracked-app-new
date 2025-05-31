@@ -1,9 +1,15 @@
-import React from 'react'
+import { getYouTubeChat } from "@/features/youtube-chat/actions/get-youtube-chat";
+import ChatYouTube from "@/features/youtube-chat/components/chat-youtube";
 
-const Page = () => {
-  return (
-    <div>Page</div>
-  )
-}
+import { notFound } from "next/navigation";
 
-export default Page
+const ChatPdfPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+	const chat = await getYouTubeChat((await params).id);
+	console.log("chat", chat);
+	if (!chat) {
+		return notFound();
+	}
+	return <ChatYouTube chat={chat} />;
+};
+
+export default ChatPdfPage;

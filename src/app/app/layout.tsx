@@ -11,7 +11,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 		<>
 			<>
 				<AppNavbar />
-				<div className="w-full px-6 pb-10">{children}</div>
+				<div className="w-full px-6">{children}</div>
 				<Toaster />
 			</>
 		</>
