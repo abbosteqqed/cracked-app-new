@@ -16,6 +16,7 @@ const embeddings = new OpenAIEmbeddings({
 	modelName: "text-embedding-3-small",
 });
 
+// PDF
 export const savePdfToPinecone = async (filename: string, urlPdf: string) => {
 	try {
 		const response = await fetch(urlPdf);
@@ -46,14 +47,77 @@ export const getPdfStore = async (filename: string, message: string) => {
 	return results;
 };
 
+// YOUTUBE
+export const saveYoutubeTranscriptToPinecone = async (
+	videoId: string,
+	transcriptEntries: { text: string; timestamp: string }[]
+) => {
+	try {
+		const documents: {
+			pageContent: string;
+			metadata: {
+				videoId: string;
+				timestamp_start: string;
+				timestamp_end: string;
+			};
+		}[] = [];
+
+		const CHUNK_SIZE = 50;
+
+		for (let i = 0; i < transcriptEntries.length; i += CHUNK_SIZE) {
+			const chunk = transcriptEntries.slice(i, i + CHUNK_SIZE);
+			const chunkText = chunk.map((entry) => entry.text).join(" ");
+			const firstEntry = chunk[0];
+			const lastEntry = chunk[chunk.length - 1];
+
+			documents.push({
+				pageContent: chunkText,
+				metadata: {
+					videoId: videoId,
+					timestamp_start: firstEntry.timestamp,
+					timestamp_end: lastEntry.timestamp,
+				},
+			});
+		}
+
+		await PineconeStore.fromDocuments(documents, embeddings, {
+			pineconeIndex,
+			namespace: videoId,
+		});
+	} catch (e) {
+		throw e;
+	}
+};
+
+export const getYoutubeTranscriptStore = async (
+	videoId: string,
+	query: string
+) => {
+	try {
+		const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+			pineconeIndex,
+			namespace: videoId,
+		});
+
+		const results = await vectorStore.similaritySearch(query, 4);
+
+		console.log(
+			`Found ${results.length} relevant segments for video ${videoId}.`
+		);
+		return results;
+	} catch (e) {
+		console.error(
+			`Error querying transcript for video ${videoId} from Pinecone:`,
+			e
+		);
+		throw e;
+	}
+};
 
 export function getLastSixMessages<T>(messages: T[]): T[] {
 	if (messages.length > 6) {
-		// If there are more than 6 messages, slice the array to get the last 6.
-		// messages.length - 6 calculates the starting index for the last 6 elements.
 		return messages.slice(messages.length - 6);
 	} else {
-		// If there are 6 or fewer messages, return the original array as is.
 		return messages;
 	}
 }

@@ -225,7 +225,6 @@ model Knowledge {
 model YoutubeVideoTranscript {
   id             String   @id @default(cuid())
   videoId        String   @unique
-  transcript     Json
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }

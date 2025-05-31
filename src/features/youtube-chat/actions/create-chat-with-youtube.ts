@@ -1,7 +1,10 @@
 "use server";
 import { getCurrentUser } from "@/features/auth/actions/get-curent-user";
-import { getYoutubeTranscript } from "./get-youtube-transcript";
+import {
+	fetchTranscript,
+} from "./get-youtube-transcript";
 import db from "@/lib/db";
+import { saveYoutubeTranscriptToPinecone } from "@/lib/pinecone";
 
 export const createChatWithYoutube = async ({
 	videoId,
@@ -23,10 +26,21 @@ export const createChatWithYoutube = async ({
 			);
 		}
 
-		const { transcript } = await getYoutubeTranscript(videoId);
+		const transcript = await db.youtubeVideoTranscript.findUnique({
+			where: { videoId },
+		});
 
-		if (!transcript || transcript.length === 0) {
-			throw new Error("No transcript available for this video.");
+		if (!transcript) {
+			const transcriptData = await fetchTranscript(videoId);
+			if (transcriptData.length === 0) {
+				throw new Error("No transcript data found for this video.");
+			} else {
+				console.log(transcriptData)
+				await saveYoutubeTranscriptToPinecone(videoId, transcriptData);
+				await db.youtubeVideoTranscript.create({
+					data: { videoId },
+				});
+			}
 		}
 
 		const chat = await db.chat.create({
