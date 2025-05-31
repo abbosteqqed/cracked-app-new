@@ -75,7 +75,7 @@ const generateWriterSystemPrompt = async (agentId: string, userId: string) => {
 
 	await redis.set(cachedName, prompt, {
 		ex: 4 * 60 * 60,
-	}); // Cache for 4 hours
+	});
 
 	return prompt;
 };

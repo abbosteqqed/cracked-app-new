@@ -96,11 +96,11 @@ enum SubscriptionStatus {
 
 model Subscription {
   id                  String             @id @default(cuid())
-  name                String // e.g., "Free", "Base", "Insanity", "Founding Member"
+  name                String
   user                User               @relation(fields: [userId], references: [id])
   userId              String             @unique
-  polarSubscriptionId String? // Polar subscription ID (for recurring subscriptions)
-  polarCheckoutId     String? // Polar checkout ID (for tracking one-time purchases)
+  polarSubscriptionId String?
+  polarCheckoutId     String?
   status              SubscriptionStatus
   startDate           DateTime?
   endDate             DateTime?
@@ -221,3 +221,13 @@ model Knowledge {
   websiteContent String?
   tokens         Int           @default(0)
 }
+
+model YoutubeVideoTranscript {
+  id             String   @id @default(cuid())
+  videoId        String   @unique
+  transcript     Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
