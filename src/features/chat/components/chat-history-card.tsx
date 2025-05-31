@@ -19,6 +19,9 @@ const ChatHistoryCard = ({
 		if (agentType === "pdf-agent") {
 			return `/app/chat-pdf/${id}`;
 		}
+		if (agentType === "youtube-chat") {
+			return `/app/chat-youtube/${id}`;
+		}
 		return `/app/chat/${id}`;
 	};
 	return (

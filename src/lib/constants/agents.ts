@@ -12,6 +12,12 @@ const AGENTS = [
 			"Chat directly with your PDF documents to get instant answers and insights.",
 	},
 	{
+		slug: "youtube-transcript",
+		name: "Chat with YouTube Video",
+		description:
+			"Chat directly with your YouTube video to get instant answers and insights.",
+	},
+	{
 		slug: "headshot-generator",
 		name: "Headshot Generator",
 		description:
