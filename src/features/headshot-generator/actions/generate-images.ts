@@ -24,14 +24,17 @@ const createGenerationRequest = (
 
 export const generateHeadshotsAction = async (imageBase64Array: string[]) => {
 	try {
-
-		const user = await getCurrentUser()
-		if(!user) {
+		const user = await getCurrentUser();
+		if (!user) {
 			throw new Error("User not authenticated");
 		}
 
-		if(user.subscription?.name.toLowerCase() === "free") {
+		if (user.subscription?.name.toLowerCase() === "free") {
 			throw new Error("This feature is not available for free users");
+		}
+
+		if (!user.credits || user.credits.totalCredits < 20000) {
+			throw new Error("You do not have enough credits to generate headshots");
 		}
 		if (imageBase64Array?.length !== 3) {
 			throw new Error("Exactly 3 reference images are required");
@@ -65,20 +68,17 @@ export const generateHeadshotsAction = async (imageBase64Array: string[]) => {
 		const extractImageUrl = (response: OpenAI.Responses.Response) =>
 			response.output.find((output) => output.type === "image_generation_call")
 				?.result || "";
-		const usedInputTokens = ((professionalResponse.usage?.input_tokens || 0) + (casualResponse.usage?.input_tokens || 0)) / 1000000 * 2 * 80000;
-		const usedOutputTokens = ((professionalResponse.usage?.output_tokens || 0) + (casualResponse.usage?.output_tokens || 0)) / 1000000 * 8 * 80000;
-		const totalCredits = usedInputTokens + usedOutputTokens;
 
 		await db.credits.update({
-			where:{
+			where: {
 				userId: user.id,
 			},
-			data:{
+			data: {
 				totalCredits: {
-					decrement: totalCredits,
+					decrement: 20000,
 				},
-			}
-		})
+			},
+		});
 
 		return {
 			urls: [

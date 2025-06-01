@@ -1,5 +1,6 @@
 import { useState, useTransition } from "react";
 import { generateHeadshotsAction } from "../actions/generate-images";
+import { toast } from "sonner";
 
 const generateBase64 = async (file: File): Promise<string> => {
 	return new Promise((resolve, reject) => {
@@ -27,6 +28,7 @@ export const useHeadshotGenerator = () => {
 			const imageBase64Array = await Promise.all(imageBase64Promises);
 			return await generateHeadshotsAction(imageBase64Array);
 		} catch (error) {
+			toast.error("Failed to generate headshots. Please try again.");
 			throw error;
 		}
 	};

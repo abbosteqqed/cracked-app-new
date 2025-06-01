@@ -17,6 +17,9 @@ const AGENTS = [
 		description:
 			"Chat directly with your YouTube video to get instant answers and insights.",
 	},
+];
+
+export const GENERTORS = [
 	{
 		slug: "headshot-generator",
 		name: "Headshot Generator",
