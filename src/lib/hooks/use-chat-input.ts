@@ -44,6 +44,7 @@ const useChatInput = ({
 		setAttachments([]);
 
 		setLocalStorageInput('');
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [attachments, handleSubmit, setAttachments, setLocalStorageInput, chatId]);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

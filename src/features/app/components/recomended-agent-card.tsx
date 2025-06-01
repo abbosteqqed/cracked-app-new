@@ -17,7 +17,7 @@ const RecomendedAgentCard = ({
 }: RecomendedAgentCardProps) => {
 	return (
 		<Link href={`${baseLinK}${slug}`}>
-			<div className="bg-slate-3 border border-slate-6 hover:border-slate-4 transition-all duration-200 backdrop-blur-2xl rounded-2xl p-6 flex size-full flex-col gap-6">
+			<div className="bg-slate-3 border border-slate-6 hover:ring-2 hover:ring-slate-7 transition-all duration-200 backdrop-blur-2xl rounded-2xl p-6 flex size-full flex-col gap-6">
 				<GradientCircle className="h-10 w-10 rounded-full" />
 				<div className="w-full flex flex-col gap-y-1.5">
 					<h3 className="text-sm">{name}</h3>

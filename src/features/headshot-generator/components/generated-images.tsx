@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
 import { downloadBase64AsJpg } from "@/lib/utils";
 import { DownloadIcon } from "lucide-react";

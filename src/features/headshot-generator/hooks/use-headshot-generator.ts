@@ -1,15 +1,9 @@
 import { useState, useTransition } from "react";
 import { generateHeadshotsAction } from "../actions/generate-images";
 import { toast } from "sonner";
+import { generateBase64 } from "@/lib/utils";
 
-const generateBase64 = async (file: File): Promise<string> => {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => resolve(reader.result as string);
-		reader.onerror = (error) => reject(error);
-		reader.readAsDataURL(file);
-	});
-};
+
 
 export const useHeadshotGenerator = () => {
 	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
