@@ -26,6 +26,12 @@ export const GENERTORS = [
 		description:
 			" Our AI generator creates professional, high-quality headshots that truly capture you – in minutes. Elevate your brand effortlessly.",
 	},
+	{
+		slug: "restore-image",
+		name: "Image Restore",
+		description:
+			"Our AI image restore tool brings your cherished memories back to life, enhancing clarity and color in minutes. Revitalize your photos effortlessly.",
+	},
 ];
 
 export default AGENTS;

@@ -11,6 +11,7 @@ interface ImagesUploadProps {
 	onFilesChange: (files: File[]) => void;
 	maxFiles?: number;
 	maxSize?: number;
+	showPreview?: boolean;
 }
 
 export function ImagesUpload({
@@ -18,6 +19,7 @@ export function ImagesUpload({
 	onFilesChange,
 	maxFiles = 3,
 	maxSize = 5 * 1024 * 1024,
+	showPreview = true,
 }: ImagesUploadProps) {
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
@@ -55,14 +57,14 @@ export function ImagesUpload({
 				<p className="text-lg font-medium mb-2">
 					{isDragActive
 						? "Drop the images here..."
-						: `Choose up to ${maxFiles} images`}
+						: `Choose up to ${maxFiles === 1 ? "1 image" : `${maxFiles} images`}`}
 				</p>
 				<p className="text-sm text-gray-600">
 					PNG, JPG, JPEG up to {Math.round(maxSize / (1024 * 1024))}MB each
 				</p>
 			</div>
 
-			{files.length > 0 && (
+			{(showPreview &&files.length > 0) && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 					{files.map((file, index) => (
 						<div
