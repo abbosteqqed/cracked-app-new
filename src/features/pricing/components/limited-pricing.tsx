@@ -26,8 +26,7 @@ const LimitedPricing = () => {
 						toast.error(data.error);
 					}
 				})
-				.catch((e) => {
-					console.log(e);
+				.catch(() => {
 					toast.error("Something went wrongly in creating checkout.");
 				});
 		});

@@ -17,6 +17,8 @@ import { createPdfAgentChat } from "../actions/create-pdfagent-chat";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import AgentFormWrapper from "@/components/agents/agent-form-wrapper";
+import AgentFormHeading from "@/components/agents/agent-form-heading";
 
 export const pdfAgetSchema = z.object({
 	name: z
@@ -54,42 +56,53 @@ const PdfAgentForm = () => {
 		}
 	};
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="w-full flex flex-col">
-				<FormField
-					control={form.control}
-					disabled={isPending}
-					name="name"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Name</FormLabel>
-							<FormControl>
-								<Input
-									type="text"
-									placeholder="Chat Name..."
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<PdfSelector
-					disabled={isPending}
-					file={file}
-					setFile={setFile}
-					errorMessage={form.formState.errors.root?.message}
-				/>
-				<Button
-					disabled={isPending}
-					type="submit"
-					className="mt-10 max-w-[120px]">
-					{isPending ? "Creating chat..." : "Create chat"}
-				</Button>
-			</form>
-		</Form>
+		<AgentFormWrapper
+			isPending={true}
+			activeId={1}
+			handleChangeTab={() => {}}
+			tabs={[{ id: 1, title: "Create Chat" }]}>
+			<AgentFormHeading
+				title="Chat with Your PDFs Instantly."
+				description="Upload your document below and start a conversation with our AI-powered
+				PDF Agent."
+			/>
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="w-full flex flex-col">
+					<FormField
+						control={form.control}
+						disabled={isPending}
+						name="name"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Name</FormLabel>
+								<FormControl>
+									<Input
+										type="text"
+										placeholder="Chat Name..."
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<PdfSelector
+						disabled={isPending}
+						file={file}
+						setFile={setFile}
+						errorMessage={form.formState.errors.root?.message}
+					/>
+					<Button
+						disabled={isPending}
+						type="submit"
+						className="mt-10 max-w-[120px]">
+						{isPending ? "Creating chat..." : "Create chat"}
+					</Button>
+				</form>
+			</Form>
+		</AgentFormWrapper>
 	);
 };
 

@@ -3,7 +3,7 @@ import React, { Suspense, lazy } from "react";
 
 import { WRITER_STEP_ITEMS } from "../contstant/steps";
 import { useWriterAgent } from "../hooks/use-writer-agent";
-import AgentFormTabs from "@/components/agents/agent-form-tabs";
+import AgentFormWrapper from "@/components/agents/agent-form-wrapper";
 const WriterPersonaForm = lazy(() => import("./writer-persona-form"));
 const WriterKnowledgeForm = lazy(() => import("./writer-knowledge-form"));
 const WriterInstructionForm = lazy(() => import("./writer-instruction-form"));
@@ -62,15 +62,13 @@ const WriterAgentStepForm = () => {
 	};
 
 	return (
-		<div className="grid grid-cols-[144px_1fr] gap-4">
-			<AgentFormTabs
-				disabled={isPending}
-				tabs={WRITER_STEP_ITEMS}
-				activeId={activeTab}
-				handleChangeTab={setActiveTab}
-			/>
+		<AgentFormWrapper
+			isPending={isPending}
+			tabs={WRITER_STEP_ITEMS}
+			activeId={activeTab}
+			handleChangeTab={setActiveTab}>
 			<Suspense fallback={<div>Loading form...</div>}>{renderForm()}</Suspense>
-		</div>
+		</AgentFormWrapper>
 	);
 };
 
