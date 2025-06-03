@@ -1,5 +1,5 @@
 import { usageOptions } from "@/lib/constants/onboarding";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import React from "react";
 import { ProfileDTO } from "../hooks/use-onboarding";
 import { Button } from "@/components/ui/button";

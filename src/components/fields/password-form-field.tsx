@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 

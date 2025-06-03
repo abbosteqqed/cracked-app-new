@@ -1,6 +1,6 @@
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { PricingPlan } from "@/lib/constants/subscription-plans";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";

@@ -1,7 +1,7 @@
 import { useState, useTransition } from "react";
 import { generateHeadshotsAction } from "../actions/generate-images";
 import { toast } from "sonner";
-import { generateBase64 } from "@/lib";
+import { generateBase64 } from "@/lib/utils";
 
 export const useHeadshotGenerator = () => {
 	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);

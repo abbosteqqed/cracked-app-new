@@ -8,7 +8,7 @@ import PreviewAttachments from "./preview-attachements";
 import equal from "fast-deep-equal";
 import CopyToClipboardButton from "@/components/shared/copy-to-clipboard";
 import GradientCircle from "@/components/ui/gradient-circle";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 
 const PurePreviewMessage = ({
 	message,
