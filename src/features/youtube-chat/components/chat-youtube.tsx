@@ -1,6 +1,6 @@
 "use client";
 import { useChat } from "@ai-sdk/react";
-import { convertAIMessage } from "@/lib/utils";
+import { convertAIMessage } from "@/lib";
 import { DbMessageWithAttachements } from "@/types/chat";
 import { toast } from "sonner";
 import { Messages } from "@/features/chat/components/messages";

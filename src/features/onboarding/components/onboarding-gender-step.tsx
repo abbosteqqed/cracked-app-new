@@ -1,6 +1,6 @@
 import { genderOptions } from "@/lib/constants/onboarding";
 import { ProfileDTO } from "../hooks/use-onboarding";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import React from "react";
 import { Button } from "@/components/ui/button";
 

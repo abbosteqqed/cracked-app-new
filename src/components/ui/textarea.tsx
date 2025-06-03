@@ -1,8 +1,7 @@
 import * as React from "react";
 
-
 import { cva, VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 const textareaVariants = cva("", {
 	variants: {

@@ -1,8 +1,13 @@
 import React from "react";
-import { FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form";
+import {
+	FieldError,
+	FieldValues,
+	Path,
+	UseFormRegister,
+} from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 interface InputFormFieldProps<TFormValues extends FieldValues> {
 	label?: string;

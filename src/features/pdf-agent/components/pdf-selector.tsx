@@ -5,7 +5,7 @@ import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Upload, File, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import FormError from "@/components/fields/form-error";
 
 interface PdfSelectorProps {

@@ -36,6 +36,8 @@ const envSchema = z.object({
 	PINECONE_INDEX_NAME: stringRequired,
 
 	OPENAI_API_KEY: stringRequired,
+
+	REPLICATE_API_KEY: stringRequired,
 });
 
 export const env = envSchema.parse(process.env);

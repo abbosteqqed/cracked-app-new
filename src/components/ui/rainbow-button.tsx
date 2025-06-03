@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 interface RainbowButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	size?: "default" | "sm" | "lg" | "icon";

@@ -1,6 +1,6 @@
 import React from "react";
 import OnboardingTitle from "./onboarding-title";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { Button } from "@/components/ui/button";
 
 interface OnBoardingWrapperProps {

@@ -6,7 +6,7 @@ import ImagesUpload from "@/features/headshot-generator/components/images-upload
 import { DownloadIcon, X } from "lucide-react";
 import React from "react";
 import { restoreImage } from "../actions/restore-image";
-import { downloadBase64AsJpg, generateBase64 } from "@/lib/utils";
+import { downloadBase64AsJpg, generateBase64 } from "@/lib";
 import { toast } from "sonner";
 
 const ImageRestoreCard = () => {

@@ -1,7 +1,7 @@
 import ChatClient from "./chat-client";
 import { getChatDetails } from "../actions/get-chat-details";
 import { notFound } from "next/navigation";
-import { convertAIMessage } from "@/lib/utils";
+import { convertAIMessage } from "@/lib";
 
 const SingleChatClient = async ({ chatId }: { chatId: string }) => {
 	const { chat } = await getChatDetails({ chatId });

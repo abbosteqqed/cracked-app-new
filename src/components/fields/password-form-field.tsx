@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
@@ -50,7 +50,11 @@ const PasswordFormField = <TFormValues extends FieldValues>({
 			<div className="flex justify-between gap-2 flex-wrap">
 				{label && <Label htmlFor={inputId}>{label}</Label>}
 				{showForgotPassword && (
-					<Link href="/auth/forgot-password" className="text-blue-10 text-sm">Forgot your password?</Link>
+					<Link
+						href="/auth/forgot-password"
+						className="text-blue-10 text-sm">
+						Forgot your password?
+					</Link>
 				)}
 			</div>
 			<div className="relative">

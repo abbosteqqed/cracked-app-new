@@ -1,5 +1,5 @@
 import { usageOptions } from "@/lib/constants/onboarding";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import React from "react";
 import { ProfileDTO } from "../hooks/use-onboarding";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,8 @@ const OnboardingAgentsStep = ({
 					}}
 					className={cn(
 						" px-4 py-3 h-auto text-sm font-medium flex justify-between",
-						value.includes(item.title) && " bg-white text-black  hover:bg-white/90"
+						value.includes(item.title) &&
+							" bg-white text-black  hover:bg-white/90"
 					)}>
 					<span>{item.title}</span>
 					<span>{item.icon}</span>
