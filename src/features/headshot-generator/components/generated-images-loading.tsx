@@ -5,9 +5,6 @@ import { BeatLoader } from "react-spinners";
 const GeneratedImagesLoading = () => {
 	return (
 		<div className="flex flex-col items-center w-full">
-			<h2 className="text-2xl font-semibold mb-4">
-				Your Professional Headshots
-			</h2>
 			<div className="grid md:grid-cols-2 gap-6 w-full">
 				{Array.from({ length: 2 }).map((_, index) => (
 					<div

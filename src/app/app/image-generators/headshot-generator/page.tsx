@@ -1,4 +1,4 @@
-import HeadshotGeneratorForm from "@/features/headshot-generator/components/headshot-generator-form";
+import HeadshotGeneratorReplicateForm from "@/features/headshot-generator/components/headshot-generator-replicate-form";
 import React from "react";
 
 const HeadshotGenerator = () => {
@@ -11,7 +11,7 @@ const HeadshotGenerator = () => {
 					maintain your facial features
 				</p>
 			</div>
-            <HeadshotGeneratorForm />
+            <HeadshotGeneratorReplicateForm />
 			
 		</div>
 	);

@@ -88,3 +88,30 @@ export const generateBase64 = async (file: File): Promise<string> => {
 		reader.readAsDataURL(file);
 	});
 };
+
+
+export function downloadImageByUrl(
+	url: string,
+	filename = "downloaded-image.jpg"
+) {
+	fetch(url)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Failed to fetch image.");
+			}
+			return response.blob();
+		})
+		.then((blob) => {
+			const blobUrl = URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = blobUrl;
+			link.download = filename;
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			URL.revokeObjectURL(blobUrl); // Clean up
+		})
+		.catch((error) => {
+			console.error("Error downloading image:", error);
+		});
+}
