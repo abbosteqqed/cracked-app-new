@@ -87,6 +87,7 @@ const HeadshotGeneratorReplicateForm = () => {
 							<img
 								src={generatedHeadshots}
 								className="w-full h-auto aspect-square max-w-lg mx-auto rounded-lg mb-4"
+								alt="Generated Image"
 							/>
 							<Button
 								variant="outline"
