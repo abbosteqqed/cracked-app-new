@@ -99,7 +99,7 @@ const HeadshotGeneratorReplicateForm = () => {
 					)}
 					{isPending && (
 						<div className="w-full">
-							<Skeleton className="w-full aspect-square rounded-lg" />
+							<Skeleton className="w-full aspect-square rounded-lg max-w-lg mx-auto" />
 						</div>
 					)}
 				</div>
